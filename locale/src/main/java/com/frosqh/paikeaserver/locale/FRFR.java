@@ -155,6 +155,11 @@ public class FRFR implements Locale {
     }
 
     @Override
+    public String desctoggledm() {
+        return "(Dés)Active le mode MJ. Plus de détails sur le mode MJ peuvent être dans l'aide en ligne";
+    }
+
+    @Override
     public String nowPlaying(String song, String artist) {
         return  "♫ Now playing - "+song+" by " + artist + " ♫";
     }
@@ -212,6 +217,21 @@ public class FRFR implements Locale {
     @Override
     public String gameadded(String name) {
         return String.format(" Le jeu %s a bien été ajouté à la BDD",name);
+    }
+
+    @Override
+    public String dmModeEnabled() {
+        return "Le mode MJ a bien été activé. S'il te plaît, souviens-toi du mot de passe que tu as mis ...";
+    }
+
+    @Override
+    public String dmModeDisabled() {
+        return "Mot de passe correct, le mode MJ a bien été désactivé.";
+    }
+
+    @Override
+    public String dmModePasswordIncorrect() {
+        return "Mot de passe incorrect, le mode MJ n'a pas été désactivé.";
     }
 
     @Override
@@ -317,5 +337,10 @@ public class FRFR implements Locale {
     @Override
     public String usagerandomgame() {
         return "Usage : !randomgame";
+    }
+
+    @Override
+    public String usagetoggledm() {
+        return "Usage : !toggleDM [motdepasse]";
     }
 }

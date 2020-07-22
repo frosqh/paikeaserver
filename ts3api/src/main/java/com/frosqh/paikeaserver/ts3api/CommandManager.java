@@ -214,9 +214,9 @@ public class CommandManager {
                         return locale.errorOnAddGame(toAdd);
                 case "toggledm":
                     if (args.length != 2)
-                        return locale.wip();
+                        return locale.usagetoggledm();
                     String password = args[1];
-                    return locale.wip();
+                    return locale.dmModeDisabled();
 
 
             }

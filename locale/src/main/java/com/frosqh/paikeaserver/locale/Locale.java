@@ -26,6 +26,7 @@ public interface Locale{
     String usageaddgame();
     String usagegamelist();
     String usagerandomgame();
+    String usagetoggledm();
 
     // Commands Help
 
@@ -42,6 +43,7 @@ public interface Locale{
     String descaddgame();
     String descgamelist();
     String descrandomgame();
+    String desctoggledm();
 
     // Commands Results
 
@@ -57,6 +59,9 @@ public interface Locale{
     String gamelist();
     String chosengame();
     String gameadded(String name);
+    String dmModeEnabled();
+    String dmModeDisabled();
+    String dmModePasswordIncorrect();
 
     // Other
 
