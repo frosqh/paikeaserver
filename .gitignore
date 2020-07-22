@@ -1,0 +1,21 @@
+# Project exclude paths
+/.gradle/
+/database/build/
+/database/build/classes/java/main/
+/file_explorer/build/
+/file_explorer/build/classes/java/main/
+/locale/build/
+/locale/build/classes/java/main/
+/locale/build/classes/java/test/
+/player/build/
+/player/build/classes/java/main/
+/settings/build/
+/settings/build/classes/java/main/
+/starter/build/
+/starter/build/classes/java/main/
+/ts3api/build/
+/ts3api/build/classes/java/main/
+/webserver/build/
+/webserver/build/classes/java/main/
+/botpaikea.db
+/server.properties

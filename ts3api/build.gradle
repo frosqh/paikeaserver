@@ -1,0 +1,29 @@
+plugins {
+    id 'java'
+}
+
+group 'com.frosqh.paikeaserver'
+version '0.1'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+test{
+    ignoreFailures = true
+}
+
+compileJava.options.encoding = 'UTF-8'
+compileTestJava.options.encoding = 'UTF-8'
+javadoc.options.encoding = 'UTF-8'
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile group: 'com.github.theholywaffle', name: 'teamspeak3-api', version: '1.1.0'
+    compile project(':locale')
+    compile project(':player')
+    compile project(':settings')
+    compile project(':database')
+}

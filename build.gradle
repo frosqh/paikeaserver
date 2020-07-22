@@ -1,0 +1,24 @@
+plugins {
+    id 'idea'
+}
+
+group 'com.frosqh.paikeaserver'
+version '0.1'
+
+repositories {
+    mavenCentral()
+}
+
+allprojects {
+    repositories {
+        jcenter()
+        flatDir {
+            dirs 'libs'
+        }
+    }
+
+}
+
+subprojects {
+    version = '0.1'
+}

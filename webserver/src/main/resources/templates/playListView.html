@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head> 
+    <title>Playlists</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="icon" href="whale.ico" />
+</head>
+<body>
+
+	<form method="get" action="addplaylist">
+		<h1>Saisie d'un animal</h1>
+		<label>Nom :</label><input type="text" id="name" name="name"/><br/>
+        <!--<label>Proprietaire :</label><input type="text" id="prop" name="prop"/><br/>-->
+
+		<br/>
+		<input type='submit' name="envoyer"/>
+    </form>
+
+<hr/>
+
+    <form method="get" action="addSong">
+        <h1>Saisie d'un trait</h1>
+        <select name="playlist">
+            <option th:each="playlist: ${playlists}" th:value="${playlist.id}" th:text="${playlist.name}">Valeur 1</option>
+        </select><br/>
+        <div th:each="song: ${songs}">
+            <label th:text="${song.title}+' - '+${song.artist}" th:name="'song'+${song.id}"></label><input  type="checkbox" th:value="${song.id}" th:name="'song'+${song.id}"/><br/>
+        </div>
+        <br/>
+        <input type='submit' name="envoyer"/>
+    </form>
+
+    <hr/>
+    <!--
+    <form method="get" action="addcarac">
+        <h1>Saisie d'une caractéristique</h1> <h4>Le trait n'a pas besoin d'avoir été ajouté préalablement</h4>
+        <select name="animal">
+            <option th:each="anim: ${animaux}" th:value="${anim.animalId}" th:text="${anim.nom}+', '+${anim.type}+' à '+${anim.prop}">Valeur 1</option>
+        </select><br/>
+        <select name="trait">
+            <option th:each="trait: ${traits}" th:value="${trait.traitId}" th:text="${trait.nom}">Valeur 1</option>
+        </select><br/>
+        <label>Valeur :</label><input type="text" id="value" name="value"/><br/>
+        <input type='submit' name="envoyer"/>
+
+    </form>
+    -->
+
+    <hr/>
+
+<table>
+  <thead>
+    <tr>
+      <th th:text="Nom">Nom</th>
+        <th th:text="Chansons">Chansons</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr th:each="prod: ${playlists}">
+    <form method="get" action="playplaylist" th:name="'playplaylist'+${prod.id}">
+      <td th:onclick="'document.forms.playplaylist'+${prod.id}+'.submit()'" th:text="${prod.name}">nom</td>
+        <input type="hidden" name="id" th:value="${prod.id}"/>
+        <td>
+            <ul th:each="sbp: ${map.get(prod.getId())}">
+                <li th:value="${sbp.id}" th:text="${mapSong.get(sbp.song_id)[0].title}">trait</li>
+            </ul>
+        </td>
+    </form>
+    </tr>
+  </tbody>
+</table>
+<hr/>
+<a href="/" >Retour à l'accueil</a><br/>
+  </body>
+</html>

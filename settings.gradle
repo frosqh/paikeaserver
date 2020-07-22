@@ -1,0 +1,10 @@
+rootProject.name = 'paikeaserver'
+include 'database'
+include 'locale'
+include 'settings'
+include 'file_explorer'
+include 'player'
+include 'ts3api'
+include 'webserver'
+include 'starter'
+

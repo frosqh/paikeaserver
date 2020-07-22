@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head> 
+    <title>Ajout d'un utilisateur</title> 
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+
+	<form method="get" action="addaddress">
+		<h1>Saisie d'une adresse</h1>
+		<label>N° :</label><input type="text" id="numero" name="numero"/><label>, rue : </label><input type="text" id="rue" name="rue"/><Br/>
+		<label>code postal :</label><input type="text" id="codePostal" name="codePostal"/><label> Ville : </label><input type="text" id="ville" name="ville"/><Br/>
+		<br/>
+		<input type='submit' name="envoyer"/>
+	</form>
+
+<hr/>
+
+<table>
+  <thead>
+    <tr>
+     <th >Liste des adresses</th>
+     </tr>
+  </thead>
+
+  <tbody>
+    <tr th:each="prod: ${addresses}">
+      <td th:text="${prod.numero}+', rue '+${prod.rue}+' '+${prod.codePostal}+' '+${prod.ville}">2 rue des lilas 39420 Jurasson</td>
+      </tr>
+  </tbody>
+</table>
+<hr/>
+<a href="/" >Retour à l'accueil</a><br/>
+  </body>
+</html>

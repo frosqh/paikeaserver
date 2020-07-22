@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <link rel="icon" href="whale.ico" />
+    <title>Accueil</title>
+    <meta name="description" content=""/>
+    <meta name="viewport" content="width=device-wdith"/>
+    <script src="https://kit.fontawesome.com/f9e3902a9b.js" crossorigin="anonymous"></script>
+    <base href="/"/>
+    <link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="css/home.css">
+</head>
+<body>
+<noscript>You need to enable JavaScript to run this app.</noscript>
+<div class="header">
+    <a id="homelink" href="#"><img id="Logo" src="whale.png" alt="Logo" class="img-circle"/></a>
+    <div class="connectedUser">
+        <table id="userText">
+            <td>User</td>
+            <td id="settingico"><a href="#"><i class="fas fa-user-cog"></i></a></td>
+            <td class="settingsPage" id="signoutico"><a><i class="fas fa-sign-out-alt"></i></a></td>
+        </table>
+    </div>
+</div>
+<div class="text-center">
+    <button class="btn">
+        <img src="google_signin_buttons/web/2x/btn_google_signin_light_normal_web@2x.png" alt="SignIn Google"/>
+    </button>
+</div>
+
+
+<div class="text-center" id="plan">
+    <a href="/songs">Liste des chansons</a>
+    <a href="/playlists">Liste des playlists</a>
+</div>
+
+<footer class="fixed-bottom" data-update="infos" data-refresh-interval="100">
+    <div id="player-bar">
+        <div id="left-controls" class="left-controls">
+    <span>
+      <i onclick="$(this).load('prev');" class="fas fa-step-backward"></i>
+    </span>
+            <span>
+        <i id="play" onclick="$('#play').show();$('#pause').hide();$(this).load('play');" class="fas fa-play"></i>
+        <i id="pause" onclick="$('#pause').show();$('#play').hide();$(this).load('pause');" class="fas fa-pause"></i>
+    </span>
+            <span>
+      <i onclick="$(this).load('next');" class="fas fa-step-forward"></i>
+    </span>
+        </div>
+        <span id="currenttotal" ></span>
+        <div class="text-center">
+            <div class="progress center-block" >
+                <div class="progress-bar" id="progressmusic" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" style="width:0"></div>
+            </div>
+        </div>
+        <span id="name">
+    <strong id="title"></strong> - <span id="artist"></span>
+  </span>
+    </div>
+</footer>
+
+
+</body>
+<script>
+    $('[data-update]').each(function() {
+        var self=$(this);
+        var target = self.data('update');
+        var refreshId = setInterval(function() {
+            fetch(target)
+                .then(response => {
+                return response.json()
+            })
+        .then(function(data){
+                console.log(data);
+                if (data.playing === '0' ){
+                    $('#play').show();
+                    $('#pause').hide();
+                } else {
+                    $('#pause').show();
+                    $('#play').hide();
+                }
+                $('#currenttotal').text(data.current+'/'+data.total);
+                $('#artist').text(data.artist);
+                $('#title').text(data.title);
+                $('#progressmusic').attr("aria-valuenow",Number(data.progress)).attr("style","width:"+Number(data.progress)+"%");
+            })
+
+        }, self.data("refresh-interval"))
+    })
+</script>
+
+</html>

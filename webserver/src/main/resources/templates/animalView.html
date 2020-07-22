@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head> 
+    <title>Ajout d'un animal</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+
+	<form method="get" action="addanimal">
+		<h1>Saisie d'un animal</h1>
+		<label>Nom :</label><input type="text" id="nom" name="nom"/><br/>
+        <label>Type :</label><input type="text" id="type" name="type"/><br/>
+        <label>Proprietaire :</label><input type="text" id="prop" name="prop"/><br/>
+        <label>Commentaire :</label><input type="text" id="comm" name="comm"/><br/>
+
+		<br/>
+		<input type='submit' name="envoyer"/>
+    </form>
+
+<hr/>
+
+    <form method="get" action="addtrait">
+        <h1>Saisie d'un trait</h1>
+        <select name="animal">
+            <option th:each="anim: ${animaux}" th:value="${anim.animalId}" th:text="${anim.nom}+', '+${anim.type}+' à '+${anim.prop}">Valeur 1</option>
+        </select><br/>
+        <select name="trait">
+            <option th:each="trait: ${traits}" th:value="${trait.traitId}" th:text="${trait.nom}">Valeur 1</option>
+        </select>
+        <br/>
+        <input type='submit' name="envoyer"/>
+    </form>
+
+    <hr/>
+
+    <form method="get" action="addcarac">
+        <h1>Saisie d'une caractéristique</h1> <h4>Le trait n'a pas besoin d'avoir été ajouté préalablement</h4>
+        <select name="animal">
+            <option th:each="anim: ${animaux}" th:value="${anim.animalId}" th:text="${anim.nom}+', '+${anim.type}+' à '+${anim.prop}">Valeur 1</option>
+        </select><br/>
+        <select name="trait">
+            <option th:each="trait: ${traits}" th:value="${trait.traitId}" th:text="${trait.nom}">Valeur 1</option>
+        </select><br/>
+        <label>Valeur :</label><input type="text" id="value" name="value"/><br/>
+        <input type='submit' name="envoyer"/>
+
+    </form>
+
+    <hr/>
+
+<table>
+  <thead>
+    <tr>
+      <th th:text="Nom">Nom</th>
+        <th th:text="Type">Type</th>
+        <th th:text="Propriétaire">Propriétaire</th>
+        <th th:text="Commentaire">Commentaire</th>
+        <th th:text="Caractéristiques">Caractéristiques</th>
+        <th th:text="Traits">Traits</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr th:each="prod: ${animaux}">
+      <td th:text="${prod.nom}">nom</td>
+        <td th:text="${prod.type}">type</td>
+        <td th:text="${prod.prop}">prop</td>
+        <td th:text="${prod.commentaire}">comm</td>
+        <td>
+            <ul th:each="trait: ${prod.traits}">
+                <li th:value="${trait.traitId}" th:text="${trait.nom} + ' - ' + ${map.get(prod).get(trait)}">trait</li>
+            </ul>
+        </td>
+    </tr>
+  </tbody>
+</table>
+<hr/>
+<a href="/" >Retour à l'accueil</a><br/>
+  </body>
+</html>
