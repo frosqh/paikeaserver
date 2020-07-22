@@ -66,6 +66,7 @@ public interface Locale{
     // Other
 
     String didYouMean(String arg, String almost);
+    String triedToConnect(int id, String name, String cmd);
 
     //Errors
 
@@ -79,6 +80,7 @@ public interface Locale{
     String dmModeAlreadyEnabled();
     String wip();
     String noPrev();
+    String notAuthorized(String name);
 
     // Easters input
 

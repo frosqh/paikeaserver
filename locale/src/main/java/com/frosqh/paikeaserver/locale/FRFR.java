@@ -240,6 +240,11 @@ public class FRFR implements Locale {
     }
 
     @Override
+    public String triedToConnect(int id, String name, String cmd) {
+        return String.format("Attention, l'utilisateur %d (%s) a tenté de taper une commande : %s", id, name, cmd);
+    }
+
+    @Override
     public String errorPause() {
         return  "Rien n'est est en train d'être joué, réfléchis un peu ><";
     }
@@ -287,6 +292,11 @@ public class FRFR implements Locale {
     @Override
     public String noPrev() {
         return "Désolé, mais aucune chanson n'a précédé celle-ci";
+    }
+
+    @Override
+    public String notAuthorized(String name) {
+        return null;
     }
 
     @Override
