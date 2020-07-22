@@ -9,6 +9,8 @@ import com.frosqh.paikeaserver.player.exceptions.PauseException;
 import com.frosqh.paikeaserver.player.exceptions.PlayException;
 import com.frosqh.paikeaserver.ts3api.exception.NotACommandException;
 import com.frosqh.paikeaserver.ts3api.spellchecker.LevenshteinDistance;
+import com.sun.tools.javac.comp.Todo;
+import com.sun.tools.javac.util.Context;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
@@ -32,7 +34,7 @@ public class CommandManager {
         baseCommands = new String[]{"paikea", "next", "play", "pause", "prev", "toggleautoplay", "info", "gamelist","randomgame"};
         //TODO add invoke
         easterEggs =  new String[]{this.locale.easterShit(),"ok google", "><", "nan", "no", "nope", "non", "nan", "niet", "nein", "pong", "ping", "plop"};
-        complexCommands = new String[]{"help", "setvolume", "addgame"};
+        complexCommands = new String[]{"help", "setvolume", "addgame", "toggledm"};
     }
 
     private String preProcess(String cmd) throws NotACommandException {
@@ -210,6 +212,11 @@ public class CommandManager {
                         return locale.gameadded(game.name);
                     else
                         return locale.errorOnAddGame(toAdd);
+                case "toggledm":
+                    if (args.length != 2)
+                        return locale.wip();
+                    String password = args[1];
+                    return locale.wip();
 
 
             }
