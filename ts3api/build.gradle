@@ -20,7 +20,7 @@ compileTestJava.options.encoding = 'UTF-8'
 javadoc.options.encoding = 'UTF-8'
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testCompile group: 'junit', name: 'junit', version: '4.13'
     compile group: 'com.github.theholywaffle', name: 'teamspeak3-api', version: '1.1.0'
     compile project(':locale')
     compile project(':player')
