@@ -112,18 +112,9 @@ public class Ts3Api {
                 String ans;
 
                 PlayMode mode = player.getMode();
-                System.out.println("Pre-if");
-                System.out.println(mode.isAllBlock());
-                System.out.println(id);
-                System.out.println(mode.getUid());
-                System.out.println(command);
-                System.out.println(args[0]);
+
 
                 if (mode.isAllBlock() && id!=mode.getUid() && !"!toggledm".equals(args[0])){
-                    System.out.println("Post-if");
-                    System.out.println(id);
-                    System.out.println(mode.getUid());
-                    System.out.println(locale.notAuthorized(player.getMode().getName()));
                     api.sendPrivateMessage(id, locale.notAuthorized(player.getMode().getName()));
                     api.sendPrivateMessage(mode.getUid(),
                             locale.triedToConnect(id, api.getClientInfo(id).getNickname(), e.getMessage()));
