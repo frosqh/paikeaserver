@@ -17,8 +17,8 @@ import java.util.*;
 public class InfoController {
 
     @GetMapping("/infos")
-    /*public Map<String,String> getInfos(){*/
-    public Song getInfos(){
+    public Map<String,String> getInfos(){
+    /*public Song getInfos(){*/
         Map<String,String> model = new HashMap<>();
         String[] infos = PaikeaApplication.player.getInfosSendable().split("â–¬");
         int timeCode = Float.valueOf(infos[3]).intValue() / 1000;
@@ -44,9 +44,9 @@ public class InfoController {
         model.put("progress",String.valueOf(timeCode/(1.*duration)*100));
         model.put("playing", infos[1].equals("true") ?"1":"0");
         /**/
-        Song song = new Song(0,"title","name","44","12");
-        return song;
-        //return model;
+        Song song = new Song(0,model.get("title"),model.get("artist"),"44","12");
+        //return song;
+        return model;
     }
 
     @RequestMapping("/prev")

@@ -19,7 +19,7 @@ public class Player {
     private MediaPlayer mediaPlayer;
     private final Stack<Song> history;
     private final Deque<Song> queue;
-    private double volume = 0.5;
+    private double volume = 0.02;
     private boolean autoPlay = true;
     private boolean isPlaying = false;
     private PlayMode mode = PlayMode.NORMAL;
