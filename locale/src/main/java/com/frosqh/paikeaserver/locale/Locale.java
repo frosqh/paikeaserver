@@ -76,6 +76,7 @@ public interface Locale{
     String notFound(String cmd);
     String undefinedBehavior();
     String easterUndefinedBehavior();
+    String dmModeAlreadyEnabled();
     String wip();
     String noPrev();
 

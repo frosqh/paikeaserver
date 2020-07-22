@@ -275,6 +275,11 @@ public class FRFR implements Locale {
     }
 
     @Override
+    public String dmModeAlreadyEnabled() {
+        return "Le mode MJ est déjà activé. Il faut le désactiver puis le réactiver si besoin est.";
+    }
+
+    @Override
     public String wip() {
         return "Cette fonction est encore en cours de développement, elle peut ne pas être fonctionnelle";
     }
