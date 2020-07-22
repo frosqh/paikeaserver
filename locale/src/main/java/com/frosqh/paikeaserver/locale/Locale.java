@@ -67,6 +67,7 @@ public interface Locale{
 
     String didYouMean(String arg, String almost);
     String triedToConnect(int id, String name, String cmd);
+    String hiddenSong();
 
     //Errors
 

@@ -22,6 +22,7 @@ public class Player {
     private double volume = 0.5;
     private boolean autoPlay = true;
     private boolean isPlaying = false;
+    private PlayMode mode = PlayMode.NORMAL;
     private final Locale locale;
     private MethodCall methodCall;
 
@@ -43,6 +44,15 @@ public class Player {
     public void setVolume(double vol){
         volume = vol/100;
         mediaPlayer.setVolume(volume);
+    }
+
+    public PlayMode getMode() {
+        return mode;
+    }
+
+    public void setPlayMode(PlayMode mode){
+        this.mode = mode;
+        updateGroup();
     }
 
     public Song getPlaying(){
@@ -180,5 +190,9 @@ public class Player {
 
     public void setMethod(MethodCall toCall) {
         this.methodCall = toCall;
+    }
+
+    public void updateGroup() {
+        methodCall.call();
     }
 }

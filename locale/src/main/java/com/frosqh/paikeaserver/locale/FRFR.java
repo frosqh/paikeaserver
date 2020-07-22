@@ -245,6 +245,11 @@ public class FRFR implements Locale {
     }
 
     @Override
+    public String hiddenSong() {
+        return "Chanson cachée";
+    }
+
+    @Override
     public String errorPause() {
         return  "Rien n'est est en train d'être joué, réfléchis un peu ><";
     }
@@ -296,7 +301,7 @@ public class FRFR implements Locale {
 
     @Override
     public String notAuthorized(String name) {
-        return null;
+        return "You are not authorized to use this command in the mode "+name;
     }
 
     @Override

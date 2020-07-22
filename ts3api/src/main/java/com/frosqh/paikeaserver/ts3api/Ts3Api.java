@@ -3,6 +3,7 @@ package com.frosqh.paikeaserver.ts3api;
 import com.frosqh.daolibrary.ConnectionSQLite;
 import com.frosqh.paikeaserver.database.*;
 import com.frosqh.paikeaserver.locale.Locale;
+import com.frosqh.paikeaserver.player.PlayMode;
 import com.frosqh.paikeaserver.player.Player;
 import com.frosqh.paikeaserver.settings.Settings;
 import com.frosqh.paikeaserver.ts3api.exception.NotACommandException;
@@ -28,6 +29,7 @@ public class Ts3Api {
     private final Player player;
     private int groupID = -1;
     private Thread changeNameThread;
+    private Song templateSong;
 
     public Ts3Api(String host, String login, String password, String botName, List<String> users, Locale locale, Player player){
         knownUsers = users;
@@ -35,6 +37,7 @@ public class Ts3Api {
         this.player = player;
         player.setMethod(this::toCalle);
         commandManager = new CommandManager(this.locale, this.player, this);
+        templateSong = new Song(-1,locale.hiddenSong(),"","","");
 
         TS3Config ts3Config = new TS3Config();
         ts3Config.setHost(host);
@@ -103,9 +106,29 @@ public class Ts3Api {
             }
             if (e.getTargetMode() == TextMessageTargetMode.CLIENT && e.getInvokerId()!=selfID){
                 int id = e.getInvokerId();
+
                 String command = e.getMessage().toLowerCase();
                 String[] args = command.split(" ");
                 String ans;
+
+                PlayMode mode = player.getMode();
+                System.out.println("Pre-if");
+                System.out.println(mode.isAllBlock());
+                System.out.println(id);
+                System.out.println(mode.getUid());
+                System.out.println(command);
+                System.out.println(args[0]);
+
+                if (mode.isAllBlock() && id!=mode.getUid() && !"!toggledm".equals(args[0])){
+                    System.out.println("Post-if");
+                    System.out.println(id);
+                    System.out.println(mode.getUid());
+                    System.out.println(locale.notAuthorized(player.getMode().getName()));
+                    api.sendPrivateMessage(id, locale.notAuthorized(player.getMode().getName()));
+                    api.sendPrivateMessage(mode.getUid(),
+                            locale.triedToConnect(id, api.getClientInfo(id).getNickname(), e.getMessage()));
+                    return;
+                } // Blocked or wrong password
 
                 if (commandManager.isEaster(command))
                     ans = commandManager.execEaster(command);
@@ -114,7 +137,7 @@ public class Ts3Api {
                         if (commandManager.isBase(command) ||args[0].equals("!help")&&args.length<2)
                             ans=commandManager.execBase(command);
                         else if (commandManager.isComplex(args[0]))
-                            ans = commandManager.execComplex(command, e.getInvokerName());
+                            ans = commandManager.execComplex(command, id);
                         else
                             ans = "‼";
                     } catch (NotACommandException ignored) {
@@ -159,7 +182,7 @@ public class Ts3Api {
     private void toCalle(){
         if (changeNameThread != null)
             changeNameThread.interrupt();
-        changeNameThread = new Thread(()->changeName(player.getPlaying(),0));
+        changeNameThread = new Thread(()->changeName(player.getMode().isAllBlock()?templateSong:player.getPlaying(),0));
         changeNameThread.start();
     }
 }

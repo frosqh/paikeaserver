@@ -3,6 +3,7 @@ package com.frosqh.paikeaserver.ts3api;
 import com.frosqh.daolibrary.DAO;
 import com.frosqh.paikeaserver.database.Game;
 import com.frosqh.paikeaserver.locale.Locale;
+import com.frosqh.paikeaserver.player.PlayMode;
 import com.frosqh.paikeaserver.player.Player;
 import com.frosqh.paikeaserver.player.exceptions.EmptyHistoryException;
 import com.frosqh.paikeaserver.player.exceptions.PauseException;
@@ -188,7 +189,7 @@ public class CommandManager {
         return "";
     }
 
-    public String execComplex(String command, String caller) {
+    public String execComplex(String command, int callerID) {
         try {
             String cmd = preProcess(command);
             String[]args = cmd.split(" ");
@@ -216,7 +217,25 @@ public class CommandManager {
                     if (args.length != 2)
                         return locale.usagetoggledm();
                     String password = args[1];
-                    return locale.dmModeDisabled();
+                    PlayMode mode = player.getMode();
+                    if (mode == PlayMode.DM){
+                        if (mode.isPasswordValid(password)){
+                            player.setPlayMode(PlayMode.NORMAL);
+                            return locale.dmModeDisabled();
+                        } else {
+                            return locale.dmModePasswordIncorrect();
+                        }
+                    } else {
+                        if (mode == PlayMode.NORMAL){
+                            player.setPlayMode(PlayMode.DM);
+                            player.getMode().setPassword(password);
+                            player.getMode().setUid(callerID);
+                            return locale.dmModeEnabled();
+                        }
+                    }
+
+
+                    return locale.undefinedBehavior();
 
 
             }
