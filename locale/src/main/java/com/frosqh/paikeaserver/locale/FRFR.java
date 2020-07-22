@@ -5,23 +5,23 @@ package com.frosqh.paikeaserver.locale;
 public class FRFR implements Locale {
     @Override
     public String paikeSong() {
-        return "\"\\n\" +\n" +
-                "            \"Uia mai koia, whakahuatia ake; \\n\" +\n" +
-                "            \"Ko wai te whare nei e?\\n\" +\n" +
-                "            \"Ko Te Kani / Ko Rangi / Whitireia! \\n\" +\n" +
-                "            \"Ko wai te tekoteko kei runga? \\n\" +\n" +
-                "            \"Ko Paikea! Ko Paikea! \\n\" +\n" +
-                "            \"Whakakau Paikea. Hei! \\n\" +\n" +
-                "            \"Whakakau he tipua. Hei! \\n\" +\n" +
-                "            \"Whakakau he taniwha. Hei! \\n\" +\n" +
-                "            \"Ka ū Paikea ki Ahuahu. Pakia! \\n\" +\n" +
-                "            \"Kei te whitia koe \\n\" +\n" +
-                "            \"ko Kahutia-te-rangi. Aue! \\n\" +\n" +
-                "            \"Me ai tō ure ki te tamahine \\n\" +\n" +
-                "            \"a Te Whironui - aue! -\\n\" +\n" +
-                "            \"nāna i noho te Roto-o-tahe. \\n\" +\n" +
-                "            \"Aue! Aue! \\n\" +\n" +
-                "            \"He koruru koe, koro e.\"";
+        return  "\n" +
+                "            Uia mai koia, whakahuatia ake;\n"+
+                "            Ko wai te whare nei e?\n" +
+                "            Ko Te Kani / Ko Rangi / Whitireia!\n" +
+                "            Ko wai te tekoteko kei runga?\n" +
+                "            Ko Paikea! Ko Paikea!\n" +
+                "            Whakakau Paikea. Hei!\n" +
+                "            Whakakau he tipua. Hei!\n" +
+                "            Whakakau he taniwha. Hei!\n" +
+                "            Ka ū Paikea ki Ahuahu. Pakia!\n" +
+                "            Kei te whitia koe\n" +
+                "            ko Kahutia-te-rangi. Aue!\n" +
+                "            Me ai tō ure ki te tamahine\n" +
+                "            a Te Whironui - aue!\n" +
+                "            nāna i noho te Roto-o-tahe.\n" +
+                "            Aue! Aue!\n" +
+                "            He koruru koe, koro e.";
     }
 
     @Override
