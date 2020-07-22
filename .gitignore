@@ -19,3 +19,5 @@
 /webserver/build/classes/java/main/
 /botpaikea.db
 /server.properties
+/.idea/
+/gradle/wrapper/
