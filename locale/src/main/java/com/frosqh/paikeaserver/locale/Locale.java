@@ -56,6 +56,7 @@ public interface Locale{
     String challengeAbort();
     String gamelist();
     String chosengame();
+    String gameadded(String name);
 
     // Other
 
@@ -66,6 +67,7 @@ public interface Locale{
     String errorPause();
     String errorOnPlay();
     String errorPlay();
+    String errorOnAddGame(String toAdd);
     String notFound(String cmd);
     String undefinedBehavior();
     String easterUndefinedBehavior();
@@ -89,4 +91,7 @@ public interface Locale{
     String pauseException();
 
     String playException();
+
+
+
 }

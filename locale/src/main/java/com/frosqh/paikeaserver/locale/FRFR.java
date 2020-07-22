@@ -210,6 +210,11 @@ public class FRFR implements Locale {
     }
 
     @Override
+    public String gameadded(String name) {
+        return String.format(" Le jeu %s a bien été ajouté à la BDD",name);
+    }
+
+    @Override
     public String didYouMean(String arg, String almost) {
         return  "Désolé, mais la commande "+arg+" n'existe pas. Vouliez-vous dire "+almost+" ?";
     }
@@ -227,6 +232,11 @@ public class FRFR implements Locale {
     @Override
     public String errorPlay() {
         return "Ça joue déjà, réfléchis un peu ><";
+    }
+
+    @Override
+    public String errorOnAddGame(String toAdd) {
+        return String.format("Oops, pour une raison obscure, on n'a pas pu ajouter %s à la BDD",toAdd);
     }
 
     @Override

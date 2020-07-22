@@ -169,7 +169,7 @@ public class CommandManager {
                 case "randomgame":
                     l = DAO.construct(Game.class).getList();
                     rep = new StringBuilder(locale.chosengame());
-                    rep.append(l.get((int) (Math.random()*(l.size()-1))).name);
+                    rep.append(l.get((int) (Math.random()*(l.size()))).name);
                     break;
 
                 default:
@@ -205,8 +205,11 @@ public class CommandManager {
                         return locale.usageaddgame();
                     String toAdd = args[1];
                     DAO<Game> gameDAO = DAO.construct(Game.class);
-                    gameDAO.create(new Game(0, toAdd));
-                    return "";
+                    Game game = gameDAO.create(new Game(0, toAdd));
+                    if (game!=null)
+                        return locale.gameadded(game.name);
+                    else
+                        return locale.errorOnAddGame(toAdd);
 
 
             }
