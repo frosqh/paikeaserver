@@ -43,14 +43,14 @@
     <div id="player-bar">
         <div id="left-controls" class="left-controls">
     <span>
-      <i onclick="$(this).load('prev');" class="fas fa-step-backward"></i>
+      <i onclick="$(this).load('prev');" class="fas fa-step-backward" data-toggle="tooltip" data-placement="top" title="Tooltip on top" id="prev"></i>
     </span>
             <span>
         <i id="play" onclick="$('#play').show();$('#pause').hide();$(this).load('play');" class="fas fa-play"></i>
         <i id="pause" onclick="$('#pause').show();$('#play').hide();$(this).load('pause');" class="fas fa-pause"></i>
     </span>
             <span>
-      <i onclick="$(this).load('next');" class="fas fa-step-forward"></i>
+      <i onclick="$(this).load('next');" class="fas fa-step-forward" data-toggle="tooltip" data-placement="top" title="Tooltip on top" id="next"></i>
     </span>
         </div>
         <span id="currenttotal" ></span>
@@ -75,9 +75,8 @@
             fetch(target)
                 .then(response => {
                 return response.json()
-            })
+            }, 500)
         .then(function(data){
-                console.log(data);
                 if (data.playing === '0' ){
                     $('#play').show();
                     $('#pause').hide();
@@ -88,6 +87,8 @@
                 $('#currenttotal').text(data.current+'/'+data.total);
                 $('#artist').text(data.artist);
                 $('#title').text(data.title);
+                $('#prev').prop('title', data.prev);
+                $('#next').prop('title', data.next);
                 $('#progressmusic').attr("aria-valuenow",Number(data.progress)).attr("style","width:"+Number(data.progress)+"%");
             })
 

@@ -20,7 +20,9 @@ public class InfoController {
     public Map<String,String> getInfos(){
     /*public Song getInfos(){*/
         Map<String,String> model = new HashMap<>();
-        String[] infos = PaikeaApplication.player.getInfosSendable().split("â–¬");
+        String inf = PaikeaApplication.player.getInfosSendable();
+        String[] infos = inf.split("â–¬");
+        String[] prevNext = PaikeaApplication.player.getPrevNext().split("â–¬");
         int timeCode = Float.valueOf(infos[3]).intValue() / 1000;
         String current = "";
         int duration = Float.valueOf(infos[5]).intValue()/1000;
@@ -37,12 +39,20 @@ public class InfoController {
             total = mD + "m";
         }
         total += sD + "s";
-        model.put("artist",infos[2].split(" - ")[0]);
-        model.put("title",infos[2].split(" - ")[1]);
+        if (infos[2].split(" - ").length < 2){
+            model.put("title","Never Gonna Give You Up");
+            model.put("artist", "Rick Astley");
+        }
+        else{
+            model.put("title",infos[2].split(" - ")[1]);
+            model.put("artist",infos[2].split(" - ")[0]);
+        }
         model.put("current",current);
         model.put("total",total);
         model.put("progress",String.valueOf(timeCode/(1.*duration)*100));
         model.put("playing", infos[1].equals("true") ?"1":"0");
+        model.put("prev",prevNext[0]);
+        model.put("next",prevNext[1]);
         /**/
         Song song = new Song(0,model.get("title"),model.get("artist"),"44","12");
         //return song;
@@ -59,7 +69,6 @@ public class InfoController {
 
     @RequestMapping("/next")
     public void next(){
-        System.out.println("next");
         PaikeaApplication.player.next();
     }
 

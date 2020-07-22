@@ -26,6 +26,8 @@ public class Player {
     private final Locale locale;
     private MethodCall methodCall;
 
+
+
     @FunctionalInterface
     public interface MethodCall{
         void call();
@@ -176,6 +178,17 @@ public class Player {
 
     public String getInfosSendable(){
         return "info▬"+isPlaying+"▬"+getPlaying()+"▬"+getTimeCode()+"▬"+getVolume()+"▬"+getDuration();
+    }
+
+    public String getPrevNext() {
+        String s = " ";
+        if (queue.size()>1) {
+            Song firstQueue = queue.pop();
+            Song secondQueue = queue.peek();
+            s = secondQueue.title;
+            queue.push(firstQueue);
+        }
+        return (history.empty()?"":history.peek().title)+"▬"+s;
     }
 
     public void playPlaylist(int playListid) {
