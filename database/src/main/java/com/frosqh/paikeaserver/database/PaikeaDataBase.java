@@ -25,7 +25,6 @@ public class PaikeaDataBase extends DataBase {
             LocalDateTime now = LocalDateTime.now();
             DiskFileExplorer dfe = new DiskFileExplorer(file, true);
             List<Song> songs = songDAO.getList();
-            System.out.println(songs.size());
             List<String> paths = dfe.list();
 
             for (Song song : songs){

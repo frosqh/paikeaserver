@@ -21,7 +21,6 @@ public class DiskFileExplorer {
     }
 
     private List<String> listDirectory(String dir){
-        System.out.println(dir);
         List<String> s = new ArrayList<>();
         String ext;
         File file = new File(dir);
