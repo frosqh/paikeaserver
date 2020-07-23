@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.*;
@@ -85,6 +86,33 @@ public class InfoController {
         try {
             PaikeaApplication.player.pause();
         } catch (PauseException ignored) {
+        }
+    }
+
+    @RequestMapping("/seekback")
+    public void seekback(){
+        try {
+            PaikeaApplication.player.seekback();
+        } catch (PlayException ignored) {
+        }
+    }
+
+    @RequestMapping("/seekfor")
+    public void seekfor(){
+        try {
+            PaikeaApplication.player.seekfor();
+        } catch (PlayException ignored) {
+        }
+    }
+
+    @RequestMapping("seekto")
+    public void seekto(@RequestParam(value="seekValue",required=true) String seekTime,
+                         Model model){
+        System.out.println("CAROTE");
+        System.out.println(seekTime);
+        try {
+            PaikeaApplication.player.seekto(Float.parseFloat(seekTime));
+        } catch (PlayException ignored) {
         }
     }
 }

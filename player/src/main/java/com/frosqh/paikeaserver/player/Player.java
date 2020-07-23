@@ -9,6 +9,7 @@ import com.frosqh.paikeaserver.player.exceptions.PauseException;
 import com.frosqh.paikeaserver.player.exceptions.PlayException;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
 
 import java.io.File;
 import java.util.*;
@@ -137,6 +138,27 @@ public class Player {
             throw new PauseException();
         mediaPlayer.pause();
         isPlaying = false;
+    }
+
+    public void seekback() throws PlayException {
+        if (mediaPlayer == null || !isPlaying){
+            throw new PlayException();
+        }
+        mediaPlayer.seek(mediaPlayer.getCurrentTime().subtract(Duration.seconds(5)));
+    }
+
+    public void seekfor() throws PlayException {
+        if (mediaPlayer == null || !isPlaying){
+            throw new PlayException();
+        }
+        mediaPlayer.seek(mediaPlayer.getCurrentTime().add(Duration.seconds(5)));
+    }
+
+    public void seekto(float seekTime) throws PlayException {
+        if (mediaPlayer == null || !isPlaying){
+            throw new PlayException();
+        }
+        mediaPlayer.seek(mediaPlayer.getTotalDuration().multiply(seekTime));
     }
 
     //TODO Handle this !

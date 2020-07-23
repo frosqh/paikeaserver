@@ -55,8 +55,8 @@
         </div>
         <span id="currenttotal" ></span>
         <div class="text-center">
-            <div class="progress center-block" >
-                <div class="progress-bar" id="progressmusic" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" style="width:0"></div>
+            <div class="progress center-block" id="progressbar">
+                <div class="progress-bar progress-bar-animated progress-bar-striped" id="progressmusic" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" style="width:100%"></div>
             </div>
         </div>
         <span id="name">
@@ -64,7 +64,6 @@
   </span>
     </div>
 </footer>
-
 
 </body>
 <script>
@@ -78,6 +77,20 @@
             this.audioTag.play();
         }
     });
+
+    document.getElementById('progressbar').addEventListener('click', function (e) {
+        var max = $(this).width()
+        var x = e.pageX - this.offsetLeft, // or e.offsetX (less support, though)
+            y = e.pageY - this.offsetTop,  // or e.offsetY
+            clickedValue = x / max;
+
+        console.log(clickedValue);
+
+        $(this).load('/seekto?seekValue='+clickedValue);
+        //$('#progressmusic').attr('aria-valuenow', Number(clickedValue)).attr("style","width:"+Number(clickedValue)+"%");
+
+        $('#progressbar').append(" <div class=\"progress-bar progress-bar-animated progress-bar-striped\" id=\"progressmusic\" aria-valuemin=\"0\" aria-valuemax=\"100\" aria-valuenow=\"0\" style=\"width:100%\"></div>")
+        });
 
 
 
@@ -122,6 +135,13 @@
                                                                             {$('#pause').click()} else {$('#play').click()}});
                 navigator.mediaSession.setActionHandler('pause', () => { if (navigator.mediaSession.playbackState === "playing")
                                                                             {$('#pause').click()} else {$('#play').click()}});
+                navigator.mediaSession.setActionHandler('seekbackward', () => {
+                    $(this).load('seekback');
+                });
+
+                navigator.mediaSession.setActionHandler('seekforward', () => {
+                    $(this).load('seekfor');
+                });
         })
 
         }, self.data("refresh-interval"))
