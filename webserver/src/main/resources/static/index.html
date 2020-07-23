@@ -73,7 +73,7 @@
 <script>
 
     function setVolume(value){
-        if (value == 0){
+        if (value <= 1){ // For an unknown reason, volume==1 => muted
             $('#volumeIcon').removeClass('fa-volume-up');
             $('#volumeIcon').removeClass('fa-volume-down');
             $('#volumeIcon').addClass('fa-volume-off');
