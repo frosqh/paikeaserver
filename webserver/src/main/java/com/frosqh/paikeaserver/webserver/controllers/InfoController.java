@@ -25,6 +25,7 @@ public class InfoController {
         String[] infos = inf.split("â–¬");
         String[] prevNext = PaikeaApplication.player.getPrevNext().split("â–¬");
         int timeCode = Float.valueOf(infos[3]).intValue() / 1000;
+        String volume = infos[4];
         String current = "";
         int duration = Float.valueOf(infos[5]).intValue()/1000;
         int mC = timeCode/60;
@@ -52,6 +53,7 @@ public class InfoController {
         model.put("total",total);
         model.put("progress",String.valueOf(timeCode/(1.*duration)*100));
         model.put("playing", infos[1].equals("true") ?"1":"0");
+        model.put("volume",volume);
         model.put("prev",prevNext[0]);
         model.put("next",prevNext[1]);
         /**/
@@ -108,11 +110,15 @@ public class InfoController {
     @RequestMapping("seekto")
     public void seekto(@RequestParam(value="seekValue",required=true) String seekTime,
                          Model model){
-        System.out.println("CAROTE");
-        System.out.println(seekTime);
         try {
             PaikeaApplication.player.seekto(Float.parseFloat(seekTime));
         } catch (PlayException ignored) {
         }
+    }
+
+    @RequestMapping("setVolume")
+    public void setVolume(@RequestParam(value="volume",required=true) String volume,
+                       Model model){
+        PaikeaApplication.player.setVolume(Float.parseFloat(volume));
     }
 }
