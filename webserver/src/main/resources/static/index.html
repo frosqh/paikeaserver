@@ -86,10 +86,8 @@
 
         console.log(clickedValue);
 
-        $(this).load('/seekto?seekValue='+clickedValue);
+        $(document).load('/seekto?seekValue='+clickedValue);
         //$('#progressmusic').attr('aria-valuenow', Number(clickedValue)).attr("style","width:"+Number(clickedValue)+"%");
-
-        $('#progressbar').append(" <div class=\"progress-bar progress-bar-animated progress-bar-striped\" id=\"progressmusic\" aria-valuemin=\"0\" aria-valuemax=\"100\" aria-valuenow=\"0\" style=\"width:100%\"></div>")
         });
 
 
