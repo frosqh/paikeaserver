@@ -72,7 +72,7 @@
 </body>
 <script>
 
-    function setVolume(value){
+    function updateIcon(value){
         if (value <= 1){ // For an unknown reason, volume==1 => muted
             $('#volumeIcon').removeClass('fa-volume-up');
             $('#volumeIcon').removeClass('fa-volume-down');
@@ -88,6 +88,10 @@
                 $('#volumeIcon').addClass('fa-volume-down');
             }
         }
+    }
+
+    function setVolume(value){
+        updateIcon(value)
         $(this).load("/setVolume?volume="+value);
     }
 
@@ -148,7 +152,7 @@
                     $('#prev').prop('title', data.prev);
                     $('#next').prop('title', data.next);
                     $('#volume').val(100*data.volume);
-                    setVolume(100*data.volume);
+                    updateIcon(100*data.volume);
                     $('#progressmusic').attr("aria-valuenow",Number(data.progress)).attr("style","width:"+Number(data.progress)+"%");
                     navigator.mediaSession.setActionHandler('previoustrack', () => $('#prev').click());
                     navigator.mediaSession.setActionHandler('nexttrack', () => $('#next').click());
