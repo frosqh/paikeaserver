@@ -148,6 +148,7 @@
                     $('#prev').prop('title', data.prev);
                     $('#next').prop('title', data.next);
                     $('#volume').val(100*data.volume);
+                    setVolume(100*data.volume);
                     $('#progressmusic').attr("aria-valuenow",Number(data.progress)).attr("style","width:"+Number(data.progress)+"%");
                     navigator.mediaSession.setActionHandler('previoustrack', () => $('#prev').click());
                     navigator.mediaSession.setActionHandler('nexttrack', () => $('#next').click());
