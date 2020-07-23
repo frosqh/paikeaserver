@@ -192,6 +192,7 @@ public class Player {
     }
 
     public void playPlaylist(int playListid) {
+        next();
         queue.removeAll(queue);
         DAO<SongByPlayList> songByPlayListDAO = DAO.construct(SongByPlayList.class);
         DAO<Song> songDAO = DAO.construct(Song.class);
@@ -199,6 +200,7 @@ public class Player {
         queue.add(new Song(0));
         queue.addAll(songsID.stream().map(t -> songDAO.find(t.song_id)).collect(Collectors.toList()));
         next();
+        history.pop();
     }
 
     public void setMethod(MethodCall toCall) {
