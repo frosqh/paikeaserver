@@ -154,6 +154,7 @@ public class Ts3Api {
     }
 
     private void changeName(Song song, int startIndex){
+
         if (Thread.currentThread().isInterrupted())
             return;
         boolean rerun = song.getTitle().length()-startIndex >= 24;

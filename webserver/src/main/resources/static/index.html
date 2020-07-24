@@ -134,7 +134,6 @@
         var self=$(this);
         var target = self.data('update');
         var refreshId = setInterval(function() {
-            console.log(navigator.mediaSession.playbackState)
             fetch(target)
                 .then(response => {
                     return response.json()
