@@ -115,13 +115,26 @@
         //$('#progressmusic').attr('aria-valuenow', Number(clickedValue)).attr("style","width:"+Number(clickedValue)+"%");
     });
 
+    navigator.mediaSession.setActionHandler('previoustrack', () => $('#prev').click());
+    navigator.mediaSession.setActionHandler('nexttrack', () => $('#next').click());
+    navigator.mediaSession.setActionHandler('play', () => { if (navigator.mediaSession.playbackState === "playing")
+    {$('#pause').click()} else {$('#play').click()}});
+    navigator.mediaSession.setActionHandler('pause', () => { if (navigator.mediaSession.playbackState === "playing")
+    {$('#pause').click()} else {$('#play').click()}});
+    navigator.mediaSession.setActionHandler('seekbackward', () => {
+        $(this).load('seekback');
+    });
 
+    navigator.mediaSession.setActionHandler('seekforward', () => {
+        $(this).load('seekfor');
+    });
 
 
     $('[data-update]').each(function() {
         var self=$(this);
         var target = self.data('update');
         var refreshId = setInterval(function() {
+            console.log(navigator.mediaSession.playbackState)
             fetch(target)
                 .then(response => {
                     return response.json()
@@ -154,19 +167,6 @@
                     $('#volume').val(100*data.volume);
                     updateIcon(100*data.volume);
                     $('#progressmusic').attr("aria-valuenow",Number(data.progress)).attr("style","width:"+Number(data.progress)+"%");
-                    navigator.mediaSession.setActionHandler('previoustrack', () => $('#prev').click());
-                    navigator.mediaSession.setActionHandler('nexttrack', () => $('#next').click());
-                    navigator.mediaSession.setActionHandler('play', () => { if (navigator.mediaSession.playbackState === "playing")
-                    {$('#pause').click()} else {$('#play').click()}});
-                    navigator.mediaSession.setActionHandler('pause', () => { if (navigator.mediaSession.playbackState === "playing")
-                    {$('#pause').click()} else {$('#play').click()}});
-                    navigator.mediaSession.setActionHandler('seekbackward', () => {
-                        $(this).load('seekback');
-                    });
-
-                    navigator.mediaSession.setActionHandler('seekforward', () => {
-                        $(this).load('seekfor');
-                    });
                 })
 
         }, self.data("refresh-interval"))
