@@ -14,7 +14,8 @@ import java.util.Properties;
 public class Settings extends Properties {
 
     private Locale locale;
-    private final static String[] keyword = {"database", "dirs", "port", "sv_address", "sv_login", "sv_password", "socket_port"};
+    private final static String[] keyword = {"database", "dirs", "port", "sv_address", "sv_login", "sv_password",
+            "socket_port", "dirDL", "locale"};
     private final static String[] intExp = {"port", "socket_port"};
 
     private static Settings instance;
@@ -38,6 +39,7 @@ public class Settings extends Properties {
         setProperty("known_users", "john; james");
         setProperty("socket_port", "8080");
         setProperty("locale", "fr_fr");
+        setProperty("dirDL", "C:\\Users\\Admin\\Music\\Downloads");
         store(output, "Bot Paikea Server Properties");
         output.close();
     }
@@ -64,6 +66,10 @@ public class Settings extends Properties {
                 locale = new FRFR(); // TODO ENEN;
             }
         }
+        File dirDL = new File(getProperty("dirDL"));
+        if (!dirDL.exists())
+            if (!dirDL.mkdir())
+                throw new Exception("Download directory does not exist");
     }
 
     private boolean isInteger(String str){

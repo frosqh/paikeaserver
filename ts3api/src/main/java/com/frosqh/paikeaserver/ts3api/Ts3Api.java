@@ -125,7 +125,7 @@ public class Ts3Api {
                         if (commandManager.isBase(command) ||args[0].equals("!help")&&args.length<2)
                             ans=commandManager.execBase(command);
                         else if (commandManager.isComplex(args[0]))
-                            ans = commandManager.execComplex(command, id);
+                            ans = commandManager.execComplex(e.getMessage(), id);
                         else
                             ans = "‼";
                     } catch (NotACommandException ignored) {

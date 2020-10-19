@@ -7,6 +7,12 @@ version '0.1'
 
 repositories {
     mavenCentral()
+    maven {
+        url 'https://jitpack.io'
+    }
+    maven {
+        url 'https://www.dcm4che.org/maven2/'
+    }
 }
 
 test{
@@ -24,4 +30,5 @@ dependencies {
     compile project(':player')
     compile project(':settings')
     compile project(':database')
+    compile project(':downloader')
 }

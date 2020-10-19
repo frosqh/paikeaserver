@@ -18,10 +18,14 @@ apply plugin: 'io.spring.dependency-management'
 group 'com.frosqh.paikeaserver'
 version '0.1'
 
-sourceCompatibility = 1.8
-
 repositories {
     mavenCentral()
+    maven {
+        url 'https://jitpack.io'
+    }
+    maven {
+        url 'https://www.dcm4che.org/maven2/'
+    }
 }
 
 dependencies {

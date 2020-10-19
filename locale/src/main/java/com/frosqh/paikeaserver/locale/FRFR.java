@@ -346,6 +346,11 @@ public class FRFR implements Locale {
     }
 
     @Override
+    public String usagedownload() {
+        return "Usage : !download [id] [titre] [artiste]";
+    }
+
+    @Override
     public String usageaddgame() {
         return "Usage : !addgame [nomdujeu]";
     }

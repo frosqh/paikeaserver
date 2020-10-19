@@ -2,6 +2,7 @@ package com.frosqh.paikeaserver.ts3api;
 
 import com.frosqh.daolibrary.DAO;
 import com.frosqh.paikeaserver.database.Game;
+import com.frosqh.paikeaserver.downloader.Downloader;
 import com.frosqh.paikeaserver.locale.Locale;
 import com.frosqh.paikeaserver.player.PlayMode;
 import com.frosqh.paikeaserver.player.Player;
@@ -30,7 +31,7 @@ public class CommandManager {
         baseCommands = new String[]{"paikea", "next", "play", "pause", "prev", "toggleautoplay", "info", "gamelist","randomgame"};
         //TODO add invoke
         easterEggs =  new String[]{this.locale.easterShit(),"ok google", "><", "nan", "no", "nope", "non", "nan", "niet", "nein", "pong", "ping", "plop"};
-        complexCommands = new String[]{"help", "setvolume", "addgame", "toggledm"};
+        complexCommands = new String[]{"help", "setvolume", "addgame", "toggledm", "download"};
     }
 
     private String preProcess(String cmd) throws NotACommandException {
@@ -189,51 +190,61 @@ public class CommandManager {
         try {
             String cmd = preProcess(command);
             String[]args = cmd.split(" ");
-            switch (args[0]){
-                case "help":
+            switch (args[0].toLowerCase()) {
+                case "help" -> {
                     String toDetail = args[1];
-                    if (isHelpable("!"+toDetail)) return getUsage(toDetail);
+                    if (isHelpable("!" + toDetail)) return getUsage(toDetail);
                     else return locale.notFound(toDetail);
-                case "setvolume":
+                }
+                case "setvolume" -> {
                     if (args.length != 2)
                         return locale.usagesetvolume();
                     player.setVolume(Double.parseDouble(args[1]));
                     return player.getInfos();
-                case "addgame":
+                }
+                case "addgame" -> {
                     if (args.length != 2)
                         return locale.usageaddgame();
                     String toAdd = args[1];
                     DAO<Game> gameDAO = DAO.construct(Game.class);
                     Game game = gameDAO.create(new Game(0, toAdd));
-                    if (game!=null)
+                    if (game != null)
                         return locale.gameadded(game.name);
                     else
                         return locale.errorOnAddGame(toAdd);
-                case "toggledm":
+                }
+                case "toggledm" -> {
                     if (args.length != 2)
                         return locale.usagetoggledm();
                     String password = args[1];
                     PlayMode mode = player.getMode();
-                    if (mode == PlayMode.DM){
-                        if (mode.isPasswordValid(password)){
+                    if (mode == PlayMode.DM) {
+                        if (mode.isPasswordValid(password)) {
                             player.setPlayMode(PlayMode.NORMAL);
                             return locale.dmModeDisabled();
                         } else {
                             return locale.dmModePasswordIncorrect();
                         }
                     } else {
-                        if (mode == PlayMode.NORMAL){
+                        if (mode == PlayMode.NORMAL) {
                             player.setPlayMode(PlayMode.DM);
                             player.getMode().setPassword(password);
                             player.getMode().setUid(callerID);
                             return locale.dmModeEnabled();
                         }
                     }
-
-
                     return locale.undefinedBehavior();
+                }
+                case "download" -> {
+                    if (args.length != 4)
+                        return locale.usagedownload();
+                    // TODO -> Back and forth to allow multiple words title/artist
+                    String id = args[1];
+                    String title = args[2];
+                    String artist = args[3];
+                    Downloader.getInstance().downloadFromYoutube(id, title, artist);
 
-
+                }
             }
         } catch (NotACommandException ignored) {
             return "‼"; //Should not happen and be checked before !

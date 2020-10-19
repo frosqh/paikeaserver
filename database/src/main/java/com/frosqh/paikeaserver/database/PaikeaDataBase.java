@@ -12,6 +12,7 @@ import com.mpatric.mp3agic.UnsupportedTagException;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -23,6 +24,8 @@ public class PaikeaDataBase extends DataBase {
 
     public void refreshSongs() throws InvalidDataException, IOException, UnsupportedTagException {
         String[] files = Settings.get("dirs").split(";");
+        List<String> filePlusDL = new ArrayList<String>(Arrays.asList(files));
+        filePlusDL.add(Settings.get("dirDL"));
         DAO<Song> songDAO = DAO.construct(Song.class);
         List<Song> songs = songDAO.getList();
         for (Song song : songs){
@@ -31,7 +34,7 @@ public class PaikeaDataBase extends DataBase {
                 songDAO.delete(song);
             }
         }
-        for (String file : files){
+        for (String file : filePlusDL){
             LocalDateTime now = LocalDateTime.now();
             DiskFileExplorer dfe = new DiskFileExplorer(file, true);
             songs = songDAO.getList();

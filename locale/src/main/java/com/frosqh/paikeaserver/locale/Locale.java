@@ -102,5 +102,5 @@ public interface Locale{
     String playException();
 
 
-
+    String usagedownload();
 }

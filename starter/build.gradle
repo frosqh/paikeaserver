@@ -13,6 +13,12 @@ javafx {
 
 repositories {
     mavenCentral()
+    maven {
+        url 'https://jitpack.io'
+    }
+    maven {
+        url 'https://www.dcm4che.org/maven2/'
+    }
 }
 
 dependencies {
@@ -21,5 +27,6 @@ dependencies {
     compile project(':database')
     compile project(':player')
     compile project(':ts3api')
+
 }
 
