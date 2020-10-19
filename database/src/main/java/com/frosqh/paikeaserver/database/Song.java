@@ -42,4 +42,6 @@ public class Song extends Model {
     public void setTitle(String substring) {
         title = substring;
     }
+
+
 }

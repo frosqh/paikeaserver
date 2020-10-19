@@ -19,6 +19,7 @@ allprojects {
 
 }
 
+
 subprojects {
     version = '0.1'
 }

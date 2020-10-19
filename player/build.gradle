@@ -1,11 +1,15 @@
 plugins {
     id 'java'
+    id 'org.openjfx.javafxplugin' version '0.0.8'
 }
 
 group 'com.frosqh.paikeaserver'
 version '0.1'
 
-sourceCompatibility = 1.8
+javafx {
+    version = "15"
+    modules = ['javafx.media', 'javafx.base']
+}
 
 repositories {
     mavenCentral()

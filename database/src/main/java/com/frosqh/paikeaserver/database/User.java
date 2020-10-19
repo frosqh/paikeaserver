@@ -2,6 +2,8 @@ package com.frosqh.paikeaserver.database;
 
 import com.frosqh.daolibrary.Model;
 
+import java.util.Random;
+
 public class User extends Model {
     public String username;
     public String mail;
@@ -28,5 +30,15 @@ public class User extends Model {
     @Override
     public String toString(){
         return "User : "+username+" at "+mail;
+    }
+
+    public static String generatePassword(int codeLength){
+        String alphabet="ABCDEFGHJKLMNPQRSTUVWXYZ1234567890";
+        StringBuilder code = new StringBuilder();
+        Random r = new Random();
+        for (int i =0; i<codeLength ;i++){
+            code.append(alphabet.charAt(r.nextInt(alphabet.length())));
+        }
+        return code.toString();
     }
 }

@@ -5,7 +5,6 @@ import com.frosqh.paikeaserver.player.exceptions.EmptyHistoryException;
 import com.frosqh.paikeaserver.player.exceptions.PauseException;
 import com.frosqh.paikeaserver.player.exceptions.PlayException;
 import com.frosqh.paikeaserver.webserver.PaikeaApplication;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +27,7 @@ public class InfoController {
         String volume = infos[4];
         String current = "";
         int duration = Float.valueOf(infos[5]).intValue()/1000;
+        // TODO : Handle code duplication
         int mC = timeCode/60;
         int sC = timeCode%60;
         if (mC > 0){
@@ -108,7 +108,7 @@ public class InfoController {
     }
 
     @RequestMapping("seekto")
-    public void seekto(@RequestParam(value="seekValue",required=true) String seekTime,
+    public void seekto(@RequestParam(value="seekValue") String seekTime,
                          Model model){
         try {
             PaikeaApplication.player.seekto(Float.parseFloat(seekTime));
@@ -117,7 +117,7 @@ public class InfoController {
     }
 
     @RequestMapping("setVolume")
-    public void setVolume(@RequestParam(value="volume",required=true) String volume,
+    public void setVolume(@RequestParam(value="volume") String volume,
                        Model model){
         PaikeaApplication.player.setVolume(Float.parseFloat(volume));
     }

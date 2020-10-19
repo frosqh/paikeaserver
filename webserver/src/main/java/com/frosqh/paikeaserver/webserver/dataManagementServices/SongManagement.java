@@ -6,7 +6,7 @@ import com.frosqh.paikeaserver.database.Song;
 import java.util.List;
 
 public class SongManagement implements ISongManagement {
-    private DAO<Song> songDAO = DAO.construct(Song.class);
+    private final DAO<Song> songDAO = DAO.construct(Song.class);
 
     @Override
     public List<Song> getAllSongs() {

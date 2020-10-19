@@ -11,8 +11,8 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -20,9 +20,9 @@ import java.util.stream.Collectors;
 @Controller
 public class PlayListController {
 
-    private IPlayListManagement playListManager = new PlayListManagement();
-    private ISongByPlayListManagement songByPlayListManager = new SongByPlayListManagement();
-    private ISongManagement songManagement = new SongManagement();
+    private final IPlayListManagement playListManager = new PlayListManagement();
+    private final ISongByPlayListManagement songByPlayListManager = new SongByPlayListManagement();
+    private final ISongManagement songManagement = new SongManagement();
 
 
     public void completeModel(Model model){
@@ -31,7 +31,9 @@ public class PlayListController {
         List<SongByPlayList> songByPlayLists = songByPlayListManager.getAllSongByPlayLists();
         List<Song> songs = songManagement.getAllSongs();
         Map<Integer, List<Song>> m = songs.stream().collect(Collectors.groupingBy(com.frosqh.daolibrary.Model::getId));
-        Map<Integer, List<SongByPlayList>> l = songByPlayLists.stream().sorted(Comparator.comparing(a -> m.get(a.song_id).get(0).getTitle())).collect(Collectors.groupingBy(songByPlayList -> songByPlayList.playList_id));
+        Map<Integer, List<SongByPlayList>> l = new HashMap<>();
+        if (songByPlayLists != null)
+            l = songByPlayLists.stream().sorted(Comparator.comparing(a -> m.get(a.song_id).get(0).getTitle())).collect(Collectors.groupingBy(songByPlayList -> songByPlayList.playList_id));
         model.addAttribute("map",l);
         model.addAttribute("songs",songs);
         model.addAttribute("mapSong",m);
@@ -44,7 +46,7 @@ public class PlayListController {
     }
 
     @RequestMapping("addplaylist")
-    public String addPlayList(@RequestParam(value="name", required=true) String name,
+    public String addPlayList(@RequestParam(value="name") String name,
                               Model model){
         playListManager.addPlayList(name,0 );
         completeModel(model);
@@ -67,7 +69,7 @@ public class PlayListController {
     }
 
     @RequestMapping("playplaylist")
-    public String playPlayList(@RequestParam(value="id",required = true) long id,
+    public String playPlayList(@RequestParam(value="id") long id,
                                Model model){
         PaikeaApplication.player.playPlaylist((int) id);
         completeModel(model);

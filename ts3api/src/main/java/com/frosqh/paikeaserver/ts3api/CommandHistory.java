@@ -5,18 +5,13 @@ import java.util.List;
 
 public class CommandHistory {
 
-    private class CommandEntry{
-        private final String command;
-        private final String user;
-        private final String[] params;
+    private static class CommandEntry{
 
         CommandEntry(String command, String user, String... params){
-            this.command = command;
-            this.user = user;
-            this.params = params;
         }
     }
 
+    @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
     private final List<CommandEntry> history;
 
     public CommandHistory(){

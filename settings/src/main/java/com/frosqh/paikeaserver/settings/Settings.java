@@ -3,25 +3,19 @@ package com.frosqh.paikeaserver.settings;
 import com.frosqh.paikeaserver.locale.FRFR;
 import com.frosqh.paikeaserver.locale.Locale;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
 
-public class Settings extends HashMap<String, String> {
+public class Settings extends Properties {
+
     private Locale locale;
-    private final static String[] keywords = {"database","dirs","port","sv_address","sv_login","sv_password","socket_port"};
-    private final static String[] intExp = {"port","socket_port"};
-
-    private static final String properties =
-            "#Bot Paikea Server Properties\n" +
-                    "database=BotPaikea.db\n" +
-                    "dirs=C:\\Users\\Admin\\Music\n"+
-                    "port=2302\n"+
-                    "bot_name=Bot Paikea\n"+
-                    "sv_address=127.0.0.1\n"+
-                    "sv_login=login_query\n"+
-                    "sv_password=password_query\n"+
-                    "known_users=john;james\n"+
-                    "socket_port=8080";
+    private final static String[] keyword = {"database", "dirs", "port", "sv_address", "sv_login", "sv_password", "socket_port"};
+    private final static String[] intExp = {"port", "socket_port"};
 
     private static Settings instance;
 
@@ -32,45 +26,44 @@ public class Settings extends HashMap<String, String> {
     }
 
     private void createSettings() throws IOException {
-        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("./server.properties"))) {
-            bufferedWriter.write(properties);
-            bufferedWriter.close();
-            System.err.println("Settings à compléter");
-            System.exit(1);
-        }
+        File file = new File("server.properties");
+        FileOutputStream output = new FileOutputStream(file);
+        setProperty("database", "BotPaikea.db");
+        setProperty("dirs", "C:\\Users\\Admin\\Music");
+        setProperty("port", "2302");
+        setProperty("bot_name", "Bot Paikea");
+        setProperty("sv_address", "127.0.0.1");
+        setProperty("sv_login", "login_query");
+        setProperty("sv_password", "password_query");
+        setProperty("known_users", "john; james");
+        setProperty("socket_port", "8080");
+        setProperty("locale", "fr_fr");
+        store(output, "Bot Paikea Server Properties");
+        output.close();
     }
 
     public void load() throws Exception {
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader("./server.properties"))){
-            String line;
-            while ((line = bufferedReader.readLine())!=null){
-                if (!line.startsWith("#")){
-                    String[] prop = line.split("=");
-                    String key = prop[0];
-                    String value = prop[1];
-                    if (Arrays.asList(intExp).contains(key) && !isInteger(value))
-                        throw new Exception("Integer expected");
-                    if (key.equals("locale")){
-                        switch (value){
-                            case "fr_fr":
-                                locale = new FRFR();
-                                break;
-                            default:
-                                System.out.println("No locale specified, fr_fr chosen");
-                                locale = new FRFR(); //TODO ENEN
-                        }
-                    } else put(key,value);
-                }
-            }
-        } catch (FileNotFoundException e) {
+        File file = new File("server.properties");
+        if (!file.exists()) {
             createSettings();
-        } catch (IOException e) {
-            e.printStackTrace();
+            System.exit(2);
         }
-
+        FileInputStream input = new FileInputStream(file);
+        load(input);
         String missings = checkSettingsIntegrity();
         if (missings != null)
             throw new Exception(missings);
+        for (String key: intExp)
+            if (!isInteger(getProperty(key)))
+                throw new Exception("Integer excepted for key "+key);
+        //noinspection SwitchStatementWithTooFewBranches
+        switch (getProperty("locale")) {
+            case "fr_fr" -> locale = new FRFR();
+            default -> {
+                System.out.println("No locale specified, fr_fr chosen");
+                locale = new FRFR(); // TODO ENEN;
+            }
+        }
     }
 
     private boolean isInteger(String str){
@@ -83,11 +76,11 @@ public class Settings extends HashMap<String, String> {
     }
 
     private String checkSettingsIntegrity(){
-        Set<String> keySet = keySet();
         List<String> errs = new ArrayList<>();
-        for (String key : keywords)
-            if (!keySet.contains(key))
+        for (String key : keyword){
+            if (!keySet().contains(key))
                 errs.add(key);
+        }
         StringBuilder res = new StringBuilder();
         for (String e : errs)
             res.append(e).append(", ");
@@ -96,7 +89,14 @@ public class Settings extends HashMap<String, String> {
         return null;
     }
 
-    public Locale getLocale() {
-        return locale;
+    public static Locale getLocale() {
+        return getInstance().locale;
     }
+
+    public static String get(String key){
+        return getInstance().getProperty(key);
+    }
+
+
+
 }

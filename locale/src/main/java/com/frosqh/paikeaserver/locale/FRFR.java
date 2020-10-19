@@ -26,7 +26,8 @@ public class FRFR implements Locale {
 
     @Override
     public String welcomeMessage() {
-        return "Plop, je suis en ligne ! Tente !help pour avoir la liste des commandes disponibles.";
+        return "Plop, je suis en ligne ! Tente !help pour avoir la liste des commandes disponibles. \n" +
+                "Si tu veux accéder à l'interface en ligne, va sur : http://bot.paikea.wtf";
     }
 
     @Override

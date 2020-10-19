@@ -9,7 +9,7 @@ import java.util.List;
 
 public class SongByPlayListManagement implements ISongByPlayListManagement{
 
-    private DAO<SongByPlayList> songByPlayListDAO = DAO.construct(SongByPlayList.class);
+    private final DAO<SongByPlayList> songByPlayListDAO = DAO.construct(SongByPlayList.class);
 
     @Override
     public List<SongByPlayList> getAllSongByPlayLists() {

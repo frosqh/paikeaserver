@@ -10,8 +10,6 @@ import com.frosqh.paikeaserver.player.exceptions.PauseException;
 import com.frosqh.paikeaserver.player.exceptions.PlayException;
 import com.frosqh.paikeaserver.ts3api.exception.NotACommandException;
 import com.frosqh.paikeaserver.ts3api.spellchecker.LevenshteinDistance;
-import com.sun.tools.javac.comp.Todo;
-import com.sun.tools.javac.util.Context;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
@@ -23,15 +21,12 @@ public class CommandManager {
     private final String[] easterEggs;
     private final String[] complexCommands;
     private final Locale locale;
-    private final CommandHistory commandHistory;
     private final Player player;
-    private final Ts3Api parent;
 
     public CommandManager(Locale locale, Player player, Ts3Api ts3Api){
-        this.commandHistory = new CommandHistory();
+        CommandHistory commandHistory = new CommandHistory();
         this.locale = locale;
         this.player = player;
-        this.parent = ts3Api;
         baseCommands = new String[]{"paikea", "next", "play", "pause", "prev", "toggleautoplay", "info", "gamelist","randomgame"};
         //TODO add invoke
         easterEggs =  new String[]{this.locale.easterShit(),"ok google", "><", "nan", "no", "nope", "non", "nan", "niet", "nein", "pong", "ping", "plop"};
@@ -110,6 +105,7 @@ public class CommandManager {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public String execBase(String command){
         StringBuilder rep = new StringBuilder("default");
         try {

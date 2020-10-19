@@ -1,0 +1,25 @@
+plugins {
+    id 'java'
+}
+
+group 'com.frosqh.paikeaserver'
+version '0.1'
+
+repositories {
+    mavenCentral()
+    maven {
+        url 'https://jitpack.io'
+    }
+    maven {
+        url 'https://www.dcm4che.org/maven2/'
+    }
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile 'com.github.sealedtx:java-youtube-downloader:2.4.1'
+    compile 'com.github.adrielcafe:AndroidAudioConverter:0.0.8'
+    compile 'xuggle:xuggle-xuggler:5.4'
+    compile group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.30'
+
+}

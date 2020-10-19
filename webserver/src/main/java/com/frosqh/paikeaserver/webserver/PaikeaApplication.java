@@ -1,14 +1,8 @@
 package com.frosqh.paikeaserver.webserver;
 
-import com.frosqh.daolibrary.ConnectionNotInitException;
-import com.frosqh.daolibrary.ConnectionSQLite;
-import com.frosqh.daolibrary.DataBase;
-import com.frosqh.paikeaserver.database.*;
 import com.frosqh.paikeaserver.player.Player;
-import com.frosqh.paikeaserver.settings.Settings;
 import com.frosqh.paikeaserver.starter.Starter;
 import com.frosqh.paikeaserver.webserver.controllers.PlayListController;
-import com.frosqh.paikeaserver.webserver.dataManagementServices.SongByPlayListManagement;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
@@ -39,6 +33,7 @@ public class PaikeaApplication {
                 start(args);
             } catch (Exception e) {
                 e.printStackTrace();
+                System.exit(e.hashCode());
             }
         }).start();
         new PlayListController().completeModel(new Model() {

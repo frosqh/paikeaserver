@@ -1,11 +1,9 @@
 package com.frosqh.paikeaserver.ts3api;
 
-import com.frosqh.daolibrary.ConnectionSQLite;
 import com.frosqh.paikeaserver.database.*;
 import com.frosqh.paikeaserver.locale.Locale;
 import com.frosqh.paikeaserver.player.PlayMode;
 import com.frosqh.paikeaserver.player.Player;
-import com.frosqh.paikeaserver.settings.Settings;
 import com.frosqh.paikeaserver.ts3api.exception.NotACommandException;
 import com.github.theholywaffle.teamspeak3.TS3Api;
 import com.github.theholywaffle.teamspeak3.TS3Config;
@@ -18,7 +16,6 @@ import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
 import com.github.theholywaffle.teamspeak3.api.wrapper.Client;
 import com.github.theholywaffle.teamspeak3.api.wrapper.ServerGroup;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class Ts3Api {
@@ -29,7 +26,7 @@ public class Ts3Api {
     private final Player player;
     private int groupID = -1;
     private Thread changeNameThread;
-    private Song templateSong;
+    private final Song templateSong;
 
     public Ts3Api(String host, String login, String password, String botName, List<String> users, Locale locale, Player player){
         knownUsers = users;

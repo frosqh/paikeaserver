@@ -12,7 +12,10 @@ import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
 import java.io.File;
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.List;
+import java.util.Stack;
 import java.util.stream.Collectors;
 
 public class Player {
@@ -207,6 +210,7 @@ public class Player {
         if (queue.size()>1) {
             Song firstQueue = queue.pop();
             Song secondQueue = queue.peek();
+            assert secondQueue != null;
             s = secondQueue.title;
             queue.push(firstQueue);
         }
@@ -215,7 +219,7 @@ public class Player {
 
     public void playPlaylist(int playListid) {
         next();
-        queue.removeAll(queue);
+        queue.removeIf(x -> true);
         DAO<SongByPlayList> songByPlayListDAO = DAO.construct(SongByPlayList.class);
         DAO<Song> songDAO = DAO.construct(Song.class);
         List<SongByPlayList> songsID = songByPlayListDAO.filter("playList_id", String.valueOf(playListid));
