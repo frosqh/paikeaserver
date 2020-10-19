@@ -11,6 +11,10 @@ import com.frosqh.paikeaserver.player.exceptions.PauseException;
 import com.frosqh.paikeaserver.player.exceptions.PlayException;
 import com.frosqh.paikeaserver.ts3api.exception.NotACommandException;
 import com.frosqh.paikeaserver.ts3api.spellchecker.LevenshteinDistance;
+import net.sourceforge.argparse4j.ArgumentParsers;
+import net.sourceforge.argparse4j.inf.ArgumentParser;
+import net.sourceforge.argparse4j.inf.ArgumentParserException;
+import net.sourceforge.argparse4j.inf.Namespace;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
@@ -23,11 +27,13 @@ public class CommandManager {
     private final String[] complexCommands;
     private final Locale locale;
     private final Player player;
+    private final Ts3Api ts3Api;
 
     public CommandManager(Locale locale, Player player, Ts3Api ts3Api){
         CommandHistory commandHistory = new CommandHistory();
         this.locale = locale;
         this.player = player;
+        this.ts3Api = ts3Api;
         baseCommands = new String[]{"paikea", "next", "play", "pause", "prev", "toggleautoplay", "info", "gamelist","randomgame"};
         //TODO add invoke
         easterEggs =  new String[]{this.locale.easterShit(),"ok google", "><", "nan", "no", "nope", "non", "nan", "niet", "nein", "pong", "ping", "plop"};
@@ -236,18 +242,54 @@ public class CommandManager {
                     return locale.undefinedBehavior();
                 }
                 case "download" -> {
-                    if (args.length != 4)
-                        return locale.usagedownload();
-                    // TODO -> Back and forth to allow multiple words title/artist
-                    String id = args[1];
-                    String title = args[2];
-                    String artist = args[3];
-                    Downloader.getInstance().downloadFromYoutube(id, title, artist);
+                    List<String> li = Arrays.asList(args).subList(1, args.length);
+                    String[] args2 = new String[6];
+                    int prec = -1;
+                    for (String s : li){
+                        if ("-i".equals(s)) {
+                            args2[0] = s;
+                            prec = 1;
+                            args2[1] = "";
+                        }
+                        else if ("-t".equals(s)){
+                            args2[2] = s;
+                            prec = 2;
+                            args2[3] = "";
+                        }
+                        else if ("-a".equals(s)){
+                            args2[4]=s;
+                            prec = 3;
+                            args2[5] = "";
+                        } else {
+                            args2[prec * 2 - 1] += s + " ";
+                        }
+
+                    }
+                    for (int i = 0; i<=2; i++) {
+                        args2[2 * i + 1] = args2[2 * i + 1].substring(0, args2[2 * i + 1].length() - 1);
+                    }
+                    System.out.println(Arrays.toString(args2));
+                    ArgumentParser argumentParser = ArgumentParsers.newArgumentParser("download")
+                            .description("Allow for downloads");
+                    argumentParser.addArgument("-i","-id")
+                            .nargs(1);
+                    argumentParser.addArgument("-t","-title")
+                            .nargs(1);
+                    argumentParser.addArgument("-a","-artist")
+                            .nargs(1);
+                    Namespace ns = argumentParser.parseArgs(args2);
+                    System.out.println(ns);
+                    Downloader.getInstance().downloadFromYoutube((String) ns.getList("i").get(0),
+                            (String) ns.getList("t").get(0),
+                            (String) ns.getList("a").get(0));
 
                 }
             }
         } catch (NotACommandException ignored) {
             return "‼"; //Should not happen and be checked before !
+        } catch (ArgumentParserException e) {
+            e.printStackTrace();
+            return locale.usagedownload();
         }
         return "Complex !";
     }

@@ -19,6 +19,7 @@ import com.github.theholywaffle.teamspeak3.api.wrapper.ServerGroup;
 import java.util.List;
 
 public class Ts3Api {
+
     private final TS3Api api;
     private final List<String> knownUsers;
     private final Locale locale;
@@ -173,5 +174,9 @@ public class Ts3Api {
             changeNameThread.interrupt();
         changeNameThread = new Thread(()->changeName(player.getMode().isAllBlock()?templateSong:player.getPlaying(),0));
         changeNameThread.start();
+    }
+
+    public TS3Api getApi() {
+        return api;
     }
 }
