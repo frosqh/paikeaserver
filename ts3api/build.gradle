@@ -26,7 +26,7 @@ javadoc.options.encoding = 'UTF-8'
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.13.1'
     compile group: 'com.github.theholywaffle', name: 'teamspeak3-api', version: '1.1.0'
-    compile group: 'net.sourceforge.argparse4j', name: 'argparse4j', version: '0.2.0'
+    compile group: 'net.sourceforge.argparse4j', name: 'argparse4j', version: '0.8.1'
     compile project(':locale')
     compile project(':player')
     compile project(':settings')
