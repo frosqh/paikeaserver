@@ -20,7 +20,7 @@ dependencies {
     compile 'com.github.sealedtx:java-youtube-downloader:2.4.1'
     compile 'com.github.adrielcafe:AndroidAudioConverter:0.0.8'
     compile group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.30'
-    compile group: 'net.bramp.ffmpeg', name: 'ffmpeg', version: '0.1'
+    compile group: 'net.bramp.ffmpeg', name: 'ffmpeg', version: '0.6.2'
     compile group: 'com.mpatric', name: 'mp3agic', version: '0.9.1'
     compile project(':settings')
     compile project(':database')
