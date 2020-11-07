@@ -67,6 +67,7 @@ public class Settings extends Properties {
             }
         }
         File dirDL = new File(getProperty("dirDL"));
+        System.out.println(dirDL);
         if (!dirDL.exists())
             if (!dirDL.mkdir())
                 throw new Exception("Download directory does not exist");

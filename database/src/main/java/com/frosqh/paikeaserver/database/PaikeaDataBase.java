@@ -18,6 +18,8 @@ import java.util.List;
 
 public class PaikeaDataBase extends DataBase {
 
+    String sep = "/";
+
     public PaikeaDataBase(String name) throws ConnectionNotInitException {
         super(name);
     }
@@ -36,7 +38,7 @@ public class PaikeaDataBase extends DataBase {
         }
         for (String file : filePlusDL){
             LocalDateTime now = LocalDateTime.now();
-            DiskFileExplorer dfe = new DiskFileExplorer(file, true);
+            DiskFileExplorer dfe = new DiskFileExplorer(file, false);
             songs = songDAO.getList();
             List<String> paths = dfe.list();
 
@@ -48,8 +50,8 @@ public class PaikeaDataBase extends DataBase {
             }
             for (String path : paths){
                 Song temp;
-                Mp3File mp3File = new Mp3File(file+"\\"+path);
-                temp = new Song(-1, getTitle(mp3File), getArtist(mp3File), file+"\\"+path, "" );
+                Mp3File mp3File = new Mp3File(file+sep+path);
+                temp = new Song(-1, getTitle(mp3File), getArtist(mp3File), file+sep+path, "" );
                 songDAO.create(temp);
 
             }

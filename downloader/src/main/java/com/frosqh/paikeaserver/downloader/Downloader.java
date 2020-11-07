@@ -11,6 +11,7 @@ import com.github.kiulian.downloader.model.formats.AudioVideoFormat;
 import com.mpatric.mp3agic.*;
 import net.bramp.ffmpeg.FFmpeg;
 import net.bramp.ffmpeg.FFmpegExecutor;
+import net.bramp.ffmpeg.FFprobe;
 import net.bramp.ffmpeg.builder.FFmpegBuilder;
 
 import java.io.File;
@@ -40,6 +41,7 @@ public class Downloader extends YoutubeDownloader {
         System.out.println(id + "-" + title + "-" + artist);
         try {
             YoutubeVideo video = this.getVideo(id);
+            System.out.println(video.audioFormats());
             List<AudioVideoFormat> videoWithAudioFormats = video.videoWithAudioFormats();
             File outputDir = new File(Settings.get("dirDL"));
             Future<File> future = video.downloadAsync(videoWithAudioFormats.get(0), outputDir, new MyYoutubeDLListener(title, id, artist));
@@ -74,30 +76,32 @@ public class Downloader extends YoutubeDownloader {
         @Override
         public void onDownloading(int progress) {
             percentageDownloads.replace(title, progress);
-            System.out.println("Downloading "+title+" : "+progress+"%");
+            // System.out.println("Downloading "+title+" : "+progress+"%");
         }
 
         @Override
         public void onFinished(File file) {
-            System.out.println("Finished file: " + file);
             String osName = System.getProperty("os.name");
             String ffmpeg;
             String mp3Name = file.getAbsolutePath().substring(0,file.getAbsolutePath().lastIndexOf("."))+".mp3";
             if (osName.toLowerCase().contains("win"))
-                ffmpeg = "D:\\workspace\\paikeaserver\\ffmpeg.exe";
+                ffmpeg = "ffmpeg.exe path"; //TODO -> Get that one ?
             else
-                ffmpeg = "D:\\workspace\\paikeaserver\\ffmpeg";
+                ffmpeg = "/usr/bin/ffmpeg";
             try {
+                // System.out.println(ffmpeg);
+                // System.out.println(file.getAbsolutePath());
+                // System.out.println(mp3Name);
                 FFmpeg ffmpeg1 = new FFmpeg(ffmpeg);
                 FFmpegBuilder fFmpegBuilder = new FFmpegBuilder()
-                        .setInput("\""+file.getAbsolutePath()+"\"")
+                        .setInput(/*"\""+*/file.getAbsolutePath()/*+"\""*/)
                         .overrideOutputFiles(true)
-                        .addOutput("\""+mp3Name+"\"")
+                        .addOutput(/*"\""+*/mp3Name/*+"\""*/)
                         .setFormat("mp3")
                         .disableSubtitle()
                         .disableVideo()
                         .done();
-                FFmpegExecutor executor = new FFmpegExecutor(ffmpeg1, null);
+                FFmpegExecutor executor = new FFmpegExecutor(ffmpeg1, new FFprobe());
                 executor.createJob(fFmpegBuilder).run();
                 Mp3File mp3File = new Mp3File(mp3Name);
                 ID3v2 id3V2 = new ID3v24Tag();
@@ -105,7 +109,7 @@ public class Downloader extends YoutubeDownloader {
                 id3V2.setTitle(title);
                 id3V2.setArtist(artist);
                 id3V2.setAudiofileUrl("https://youtube.com/watch?v="+id);
-                mp3File.save(Settings.get("dirDL")+"\\"+id3V2.getTitle()+".mp3");
+                mp3File.save(Settings.get("dirDL")+"/"+id3V2.getTitle()+".mp3");
                 File file1 = new File(mp3Name);
                 if (file1.exists())
                     file1.delete();
