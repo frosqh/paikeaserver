@@ -45,7 +45,7 @@ public class Settings extends Properties {
     }
 
     public void load() throws Exception {
-        File file = new File("server.properties");
+        File file = new File("../server.properties");
         if (!file.exists()) {
             createSettings();
             System.exit(2);

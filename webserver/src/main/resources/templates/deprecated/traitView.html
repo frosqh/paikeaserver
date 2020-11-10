@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head> 
+    <title>Ajout d'un trait</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+
+	<form method="get" action="addtrait">
+		<h1>Saisie d'un trait</h1>
+		<label>Nom :</label><input type="text" id="nom" name="nom"/><br/>
+		<br/>
+		<input type='submit' name="envoyer"/>
+	</form>
+
+<hr/>
+
+<table>
+  <thead>
+    <tr>
+      <th th:text="Nom">Nom</th>
+        <th th:text="Nombre_utilisation">Nombre d'utilisations</th>
+        <th th:text="Nombre_carac">Nombre de caractéristiques associées</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr th:each="prod: ${traits}">
+      <td th:text="${prod.nom}">nom</td>
+    <td th:text="${map.get(prod)}">nom</td>
+        <td th:text="${mapC.get(prod)}">nom</td>
+    </tr>
+  </tbody>
+</table>
+<hr/>
+<a href="/" >Retour à l'accueil</a><br/>
+  </body>
+</html>
