@@ -279,7 +279,11 @@ public class CommandManager {
                             .nargs(1);
                     Namespace ns = argumentParser.parseArgs(args2);
                     System.out.println(ns);
-                    Downloader.getInstance().downloadFromYoutube(((String) ns.getList("i").get(0)).substring(1),
+                    String id = (String) ns.getList("i").get(0);
+                    if (id.startsWith(" ")){
+                        id = id.substring(1);
+                    }
+                    Downloader.getInstance().downloadFromYoutube(id,
                             (String) ns.getList("t").get(0),
                             (String) ns.getList("a").get(0));
 
