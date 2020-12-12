@@ -32,9 +32,8 @@ public class Downloader extends YoutubeDownloader {
         try {
             Process p = Runtime.getRuntime().exec("youtube-dl "+id+" -x --audio-format mp3 --id");
             p.waitFor();
-            String mp3Name = id+".mp3";
             String current = System.getProperty("user.dir");
-            System.out.println(current);
+            String mp3Name = current+"/"+id+".mp3";
             Mp3File mp3File = new Mp3File(mp3Name);
             ID3v2 id3V2 = new ID3v24Tag();
             mp3File.setId3v2Tag(id3V2);
