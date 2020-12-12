@@ -149,7 +149,7 @@ public class CommandManager {
                 case "pause":
                     try {
                         player.pause();
-                        rep = null;
+                        rep = new StringBuilder(player.getInfos());
                     } catch (PauseException e) {
                         rep = new StringBuilder(locale.errorPause());
                     }

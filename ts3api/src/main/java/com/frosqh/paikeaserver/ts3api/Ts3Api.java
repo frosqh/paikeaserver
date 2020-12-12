@@ -135,7 +135,6 @@ public class Ts3Api {
                 }
 
                 if (!"‼".equals(ans)){
-                    System.out.println(id + "-----" + ans);
                     api.sendPrivateMessage(id, ans);
                 } else {
                     String almost;
