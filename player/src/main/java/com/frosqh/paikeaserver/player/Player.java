@@ -96,7 +96,7 @@ public class Player {
         if (queue.isEmpty()){
             DAO<Song> songDAO  = DAO.construct(Song.class);
             List<Song> songs  = songDAO.getList();
-            int rand = (int) (Math.random()*(songs.size()-1));
+            int rand = (int) (Math.random()*(songs.size()));
             Song nextSong = songs.get(rand);
             queue.add(nextSong);
         }
