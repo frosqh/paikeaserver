@@ -49,5 +49,4 @@ public class Downloader extends YoutubeDownloader {
             e.printStackTrace();
         }
     }
-
 }
