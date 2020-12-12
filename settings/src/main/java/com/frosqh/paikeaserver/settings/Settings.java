@@ -27,7 +27,7 @@ public class Settings extends Properties {
     }
 
     private void createSettings() throws IOException {
-        File file = new File("server.properties");
+        File file = new File("../server.properties");
         FileOutputStream output = new FileOutputStream(file);
         setProperty("database", "BotPaikea.db");
         setProperty("dirs", "C:\\Users\\Admin\\Music");
