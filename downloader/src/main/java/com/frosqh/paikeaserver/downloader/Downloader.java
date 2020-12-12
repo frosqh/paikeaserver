@@ -33,6 +33,8 @@ public class Downloader extends YoutubeDownloader {
             Process p = Runtime.getRuntime().exec("youtube-dl "+id+" -x --audio-format mp3 --id");
             p.waitFor();
             String mp3Name = id+".mp3";
+            String current = System.getProperty("user.dir");
+            System.out.println(current);
             Mp3File mp3File = new Mp3File(mp3Name);
             ID3v2 id3V2 = new ID3v24Tag();
             mp3File.setId3v2Tag(id3V2);
@@ -43,7 +45,7 @@ public class Downloader extends YoutubeDownloader {
             File file1 = new File(mp3Name);
             if (file1.exists())
                 file1.delete();
-            new PaikeaDataBase("BotPaikea.db").refreshSongs();
+            new PaikeaDataBase("../BotPaikea.db").refreshSongs();
         } catch (IOException | InvalidDataException | UnsupportedTagException | NotSupportedException | InterruptedException | ConnectionNotInitException e) {
             e.printStackTrace();
         }
