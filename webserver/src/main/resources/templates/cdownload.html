@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      lang="fr" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5 ">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <link rel="icon" th:href="@{/PaikeaPlusPA.ico}"/>
+    <title>Compléter le téléchargment</title>
+    <meta name="description" content=""/>
+    <meta name="viewport" content="width=device-wdith"/>
+    <script src="https://kit.fontawesome.com/f9e3902a9b.js" crossorigin="anonymous"></script>
+    <base href="/"/>
+    <link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+
+    <link th:href="@{/css/home.css}" rel="stylesheet"/>
+</head>
+<body>
+
+<form action="/cdownload">
+    <div th:each="song :${songs}">
+        <label th:for="'title'+${songs.indexOf(song)}" th:text="${song}"></label> ->
+        <input th:type="text" th:id="'title'+${songs.indexOf(song)}" th:name="'title[]'" placeholder="Nouveau Titre" required> -
+        <input th:type="text" th:id="'artist'+${songs.indexOf(song)}" th:name="'artist[]'" placeholder="Nouvel Artiste" required>
+    </div>
+
+    <input th:type="submit" th:value="Modifier">
+
+</form>
+
+</body>
+</html>

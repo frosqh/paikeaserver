@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      lang="fr" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5 ">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <link rel="icon" th:href="@{/PaikeaPlusPA.ico}"/>
+    <title>Télécharger une chanson</title>
+    <meta name="description" content=""/>
+    <meta name="viewport" content="width=device-wdith"/>
+    <script src="https://kit.fontawesome.com/f9e3902a9b.js" crossorigin="anonymous"></script>
+    <base href="/"/>
+    <link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+
+    <link th:href="@{/css/home.css}" rel="stylesheet"/>
+</head>
+<body>
+<form method="get" action="reqdownload">
+    <label id='idlabel' for="id">Identifiant : </label><input required type="text" id="id" name="id" placeholder="dQw4w9WgXcQ">
+    <label id='titlelabel' for="title">Titre : </label><input required type="text" id="title" name="title" placeholder="Never Gonna Give You Up">
+    <label id="artistlabel" for="artist">Artiste : </label><input required type="text" id="artist"name="artist" placeholder="Rick Astley">
+
+    <br/>
+
+    <input type="radio" id="youtube" name="service" value="youtube" checked>
+    <label for="youtube">YouTube</label>
+    <input type="radio" id="spotify" name="service" value="spotify">
+    <label for="spotify">Spotify</label>
+
+    <br/>
+
+    <input type="radio" id="song" name="type" value="song" checked
+            onclick="document.getElementById('title').hidden = false; document.getElementById('artist').hidden = false;
+                     document.getElementById('titlelabel').hidden=false;document.getElementById('artistlabel').hidden=false;
+                     document.getElementById('title').required=true;document.getElementById('artist').required=true;">
+    <label for="song">Chanson</label>
+    <input type="radio" id="playlist" name="type" value="playlist"
+           onclick="document.getElementById('title').hidden = true; document.getElementById('artist').hidden = true;
+                    document.getElementById('titlelabel').hidden=true;document.getElementById('artistlabel').hidden=true;
+                    document.getElementById('title').required=false;document.getElementById('artist').required=false;">
+    <label for="playlist">Playlist</label>
+
+    <br/>
+
+    <input type="submit" id="download" value="Télecharger">
+</form>
+</body>
+</html>

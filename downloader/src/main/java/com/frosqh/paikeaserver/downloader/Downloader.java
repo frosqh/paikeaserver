@@ -49,4 +49,15 @@ public class Downloader extends YoutubeDownloader {
             e.printStackTrace();
         }
     }
+
+    public void downloadFromYoutubePlayListFirstStep(String id){
+        try {
+            Process p = Runtime.getRuntime().exec("youtube-dl -x --audio-format mp3 -o %(title)s.%(ext)s -i "+id);
+            int status = p.waitFor();
+            if (status != 0)
+                System.err.println("WHOOPS "+status);
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 }
