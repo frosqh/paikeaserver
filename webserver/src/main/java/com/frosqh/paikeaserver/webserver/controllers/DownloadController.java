@@ -1,5 +1,7 @@
 package com.frosqh.paikeaserver.webserver.controllers;
 
+import com.frosqh.daolibrary.ConnectionNotInitException;
+import com.frosqh.paikeaserver.database.PaikeaDataBase;
 import com.frosqh.paikeaserver.downloader.Downloader;
 import com.frosqh.paikeaserver.file_explorer.DiskFileExplorer;
 import com.frosqh.paikeaserver.settings.Settings;
@@ -74,7 +76,7 @@ public class DownloadController {
     public String completeDownload(HttpServletRequest request,
                                    @RequestParam(value = "title[]") List<String> titres,
                                    @RequestParam(value = "artist[]") List<String> artists,
-                                   Model model) throws InvalidDataException, IOException, UnsupportedTagException, NotSupportedException {
+                                   Model model) throws InvalidDataException, IOException, UnsupportedTagException, NotSupportedException, ConnectionNotInitException {
         List<String> mp3files = new DiskFileExplorer(System.getProperty("user.dir"), false).list();
         int n = titres.size();
         for (int i=0; i<n; i++){
@@ -86,6 +88,7 @@ public class DownloadController {
             id3V2.setArtist(artists.get(i));
             mp3File.save(Settings.get("dirDL")+"/"+id3V2.getTitle()+".mp3");
             File file1 = new File(mp3Name);
+            new PaikeaDataBase("../BotPaikea.db").refreshSongs();
             if (file1.exists())
                 file1.delete();
         }
