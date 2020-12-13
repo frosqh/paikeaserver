@@ -58,7 +58,6 @@ public class DownloadController {
                     case "playlist" -> {
                         Downloader.getInstance().downloadFromYoutubePlayListFirstStep(id);
                         List<String> mp3files = new DiskFileExplorer(System.getProperty("user.dir"), false).list();
-                        request.getSession().setAttribute("files", mp3files);
                         model.addAttribute("songs", mp3files);
                         return "cdownload";
                     }
@@ -76,7 +75,7 @@ public class DownloadController {
                                    @RequestParam(value = "title[]") List<String> titres,
                                    @RequestParam(value = "artist[]") List<String> artists,
                                    Model model) throws InvalidDataException, IOException, UnsupportedTagException, NotSupportedException {
-        List<String> mp3files = (List<String>) request.getSession().getAttribute("files");
+        List<String> mp3files = new DiskFileExplorer(System.getProperty("user.dir"), false).list();
         int n = titres.size();
         for (int i=0; i<n; i++){
             String mp3Name = mp3files.get(i);
