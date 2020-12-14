@@ -16,24 +16,28 @@ public class SongController {
 
     private final ISongManagement songManager = new SongManagement();
 
-    private void completeModel(Model model){
+    private void completeModel(Model model, boolean musicAdded, String added){
         List<Song> songs = songManager.getAllSongs();
+        model.addAttribute("hasBeenAdded", musicAdded);
+        model.addAttribute("added", added);
         model.addAttribute("songs",songs);
     }
 
     @RequestMapping("songs")
     public String showAll(Model model){
-        completeModel(model);
+        completeModel(model, false, null);
         return "songView";
     }
 
     @RequestMapping("playsong")
     public String playSong(@RequestParam(value="id") long id,
             Model model){
-        PaikeaApplication.player.add(songManager.findOne(id));
-        completeModel(model);
-        return "redirect:songs";
+        Song song = songManager.findOne(id);
+        PaikeaApplication.player.add(song);
+        completeModel(model, true, song.getTitle());
+        return "songView";
     }
 
+    //TODO -> Regarder s'i ne serait pas en fait putain de possible d'afficher la queue, ce qui permettrait possiblement une lecture plus facile de la fonctionnalité d'ajout ?
 
 }

@@ -4,7 +4,12 @@
     <title>Liste des chansons</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/f9e3902a9b.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
 
+    <link th:href="@{/css/home.css}" rel="stylesheet"/>
     <style>
         table, tr, td, th{
             border: 1px solid blue;
@@ -42,7 +47,58 @@
 
 <hr/>
 <a href="/" >Retour à l'accueil</a><br/>
+
+
+<footer class="fixed-bottom" data-update="infos" data-refresh-interval="750">
+    <div id="player-bar">
+        <div id="left-controls" class="left-controls">
+    <span>
+      <i onclick="$(this).load('prev');" class="fas fa-step-backward" data-toggle="tooltip" data-placement="top"
+         title="Tooltip on top" id="prev"></i>
+    </span>
+            <span>
+        <i id="play" onclick="$('#play').show();$('#pause').hide();$(this).load('play');" class="fas fa-play"></i>
+        <i id="pause" onclick="$('#pause').show();$('#play').hide();$(this).load('pause');" class="fas fa-pause"></i>
+    </span>
+            <span>
+      <i onclick="$(this).load('next');" class="fas fa-step-forward" data-toggle="tooltip" data-placement="top"
+         title="Tooltip on top" id="next"></i>
+    </span>
+        </div>
+        <div class="text-center"> <span>
+            <label for="volume"><i class="fa fa-volume-up" aria-hidden="true" id="volumeIcon"></i></label>
+            <input type="range" class="custom-range" id="volume" oninput="setVolume(this.value)"
+                   onchange="setVolume(this.value)">
+        </span></div>
+        <span id="currenttotal"></span>
+        <div class="text-center">
+            <div class="progress center-block" id="progressbar">
+                <div class="progress-bar" id="progressmusic" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"
+                     style="width:100%"></div>
+            </div>
+        </div>
+        <span id="name">
+    <strong id="title"></strong> - <span id="artist"></span>
+  </span>
+    </div>
+</footer>
+
 </body>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+
+    var hasBeenAdded = /*[[${hasBeenAdded}]]*/ false;
+    var song = /*[[${added}]]*/ 'default';
+    alert(hasBeenAdded);
+    alert(song);
+    if (hasBeenAdded) {
+        alert("Song " + song + " has been added to the queue !")
+    }
+    /*]]>*/
+</script>
+
+
 <script>
 
     function removeHighlighting(highlightedElements){
@@ -91,4 +147,115 @@
         });
     });
 </script>
+
+<script>
+
+    function updateIcon(value) {
+        if (value <= 1) { // For an unknown reason, volume==1 => muted
+            $('#volumeIcon').removeClass('fa-volume-up');
+            $('#volumeIcon').removeClass('fa-volume-down');
+            $('#volumeIcon').addClass('fa-volume-off');
+        } else if (value > 60) {
+            $('#volumeIcon').removeClass('fa-volume-off');
+            $('#volumeIcon').removeClass('fa-volume-down');
+            $('#volumeIcon').addClass('fa-volume-up');
+        } else {
+            $('#volumeIcon').removeClass('fa-volume-up');
+            $('#volumeIcon').removeClass('fa-volume-off');
+            $('#volumeIcon').addClass('fa-volume-down');
+        }
+    }
+
+    function setVolume(value) {
+        updateIcon(value)
+        $(this).load("/setVolume?volume=" + value);
+    }
+
+    $(document.body)[0].addEventListener('pointerup', function () {
+        if (!this.audioTag) {
+            this.audioTag = document.createElement('audio');
+            document.body.appendChild(this.audioTag);
+            this.audioTag.src = "https://raw.githubusercontent.com/anars/blank-audio/master/10-seconds-of-silence.mp3";
+            this.audioTag.loop = true;
+            this.audioTag.play();
+        }
+    });
+
+    document.getElementById('progressbar').addEventListener('click', function (e) {
+        var max = $(this).width()
+        var x = e.pageX - this.offsetLeft, // or e.offsetX (less support, though)
+            y = e.pageY - this.offsetTop,  // or e.offsetY
+            clickedValue = x / max;
+
+        $(document).load('/seekto?seekValue=' + clickedValue);
+        //$('#progressmusic').attr('aria-valuenow', Number(clickedValue)).attr("style","width:"+Number(clickedValue)+"%");
+    });
+
+    navigator.mediaSession.setActionHandler('previoustrack', () => $('#prev').click());
+    navigator.mediaSession.setActionHandler('nexttrack', () => $('#next').click());
+    navigator.mediaSession.setActionHandler('play', () => {
+        if (navigator.mediaSession.playbackState === "playing") {
+            $('#pause').click()
+        } else {
+            $('#play').click()
+        }
+    });
+    navigator.mediaSession.setActionHandler('pause', () => {
+        if (navigator.mediaSession.playbackState === "playing") {
+            $('#pause').click()
+        } else {
+            $('#play').click()
+        }
+    });
+    navigator.mediaSession.setActionHandler('seekbackward', () => {
+        $(this).load('seekback');
+    });
+
+    navigator.mediaSession.setActionHandler('seekforward', () => {
+        $(this).load('seekfor');
+    });
+
+
+    $('[data-update]').each(function () {
+        var self = $(this);
+        var target = self.data('update');
+        var refreshId = setInterval(function () {
+            fetch(target)
+                .then(response => {
+                    return response.json()
+                })
+                .then(function (data) {
+                    if (data.playing === '0') {
+                        $('#play').show();
+                        $('#pause').hide();
+                        navigator.mediaSession.playbackState = "paused";
+                    } else {
+                        $('#pause').show();
+                        $('#play').hide();
+                        navigator.mediaSession.playbackState = "playing";
+                    }
+                    navigator.mediaSession.metadata = new MediaMetadata({
+                        title: data.title,
+                        artist: data.artist,
+                        artwork: [{src: 'PaikeaPlusPAlpha.png', sizes: '96x96', type: 'image/png'},
+                            {src: 'PaikeaPlusPAlpha.png', sizes: '128x128', type: 'image/png'},
+                            {src: 'PaikeaPlusPAlpha.png', sizes: '192x192', type: 'image/png'},
+                            {src: 'PaikeaPlusPAlpha.png', sizes: '256x256', type: 'image/png'},
+                            {src: 'PaikeaPlusPAlpha.png', sizes: '384x384', type: 'image/png'},
+                            {src: 'PaikeaPlusPAlpha.png', sizes: '512x512', type: 'image/png'},]
+                    });
+                    $('#currenttotal').text(data.current + '/' + data.total);
+                    $('#artist').text(data.artist);
+                    $('#title').text(data.title);
+                    $('#prev').prop('title', data.prev);
+                    $('#next').prop('title', data.next);
+                    $('#volume').val(100 * data.volume);
+                    updateIcon(100 * data.volume);
+                    $('#progressmusic').attr("aria-valuenow", Number(data.progress)).attr("style", "width:" + Number(data.progress) + "%");
+                })
+
+        }, self.data("refresh-interval"))
+    })
+</script>
+
 </html>
