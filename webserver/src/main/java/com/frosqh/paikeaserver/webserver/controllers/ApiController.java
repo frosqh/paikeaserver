@@ -70,6 +70,7 @@ public class ApiController {
         Map<String, String> frame3 = new HashMap<>();
         frame3.put("text", message);
         frame3.put("icon", "a43323");
+        frame3.put("index", "0");
 
         model2.put("frames", new ArrayList<>());
         //model2.get("frames").add(frame1);
