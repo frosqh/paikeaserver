@@ -91,7 +91,7 @@ public class InfoController {
     @RequestMapping("/pauseplay")
     public void pauseplay(){
         try {
-            if (PaikeaApplication.player.getPlaying() != null)
+            if (PaikeaApplication.player.isPlaying())
                 PaikeaApplication.player.pause();
             else
                 PaikeaApplication.player.play();

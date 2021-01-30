@@ -236,4 +236,9 @@ public class Player {
     public void updateGroup() {
         methodCall.call();
     }
+
+
+    public boolean isPlaying() {
+        return isPlaying;
+    }
 }
