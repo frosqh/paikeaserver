@@ -68,8 +68,8 @@ public class ApiController {
 
 
         Map<String, String> frame3 = new HashMap<>();
-        frame1.put("text", message);
-        frame1.put("icon", "a43323");
+        frame3.put("text", message);
+        frame3.put("icon", "a43323");
 
         model2.put("frames", new ArrayList<>());
         //model2.get("frames").add(frame1);
@@ -82,10 +82,10 @@ public class ApiController {
         return model2;
     }
 
-    @RequestMapping("/changemesage")
+    @RequestMapping("/changemessage")
     public String getApiInfos(@RequestParam(value="message") String message,
                                                  Model model) {
         this.message = message;
-        return "redirect:apiinfos";
+        return "redirect:playlist";
     }
 }
