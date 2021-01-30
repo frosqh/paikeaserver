@@ -49,7 +49,7 @@ public class ApiController {
             model.put("title",infos[2].split(" - ")[1]);
             model.put("artist",infos[2].split(" - ")[0]);
         }
-        frame1.put("text", model.get("title"));
+        frame1.put("text", "♫"+model.get("title")+"♫");
         frame1.put("icon", "a43323");
 
         frame2.put("text", "♫"+model.get("title")+"♫");
