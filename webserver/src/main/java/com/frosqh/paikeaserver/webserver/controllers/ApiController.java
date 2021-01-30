@@ -17,6 +17,7 @@ import java.util.Map;
 public class ApiController {
 
     String message;
+    Long prevNano;
 
     @RequestMapping("/apiinfos")
     public Map<String, List<Object>> getApiInfos() {
@@ -87,6 +88,16 @@ public class ApiController {
     public String getApiInfos(@RequestParam(value="message") String message,
                                                  Model model) {
         this.message = message;
+        return "redirect:playlist";
+    }
+
+    @RequestMapping("/wait")
+    public String waitForDoublePress() {
+        Long currentNano = System.nanoTime();
+        new InfoController().pauseplay();
+        if (prevNano != null && currentNano - prevNano <= 1e9){
+            new InfoController().next();
+        }
         return "redirect:playlist";
     }
 }
