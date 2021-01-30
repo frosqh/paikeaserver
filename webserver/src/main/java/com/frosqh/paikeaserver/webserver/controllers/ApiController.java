@@ -64,7 +64,7 @@ public class ApiController {
 
         model2.put("frames", new ArrayList<>());
         model2.get("frames").add(frame1);
-        model2.get("frames").add(goalData);
+        model2.get("frames").add(frame2);
 
 
         return model2;
