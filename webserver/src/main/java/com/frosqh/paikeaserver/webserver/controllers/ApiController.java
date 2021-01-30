@@ -3,6 +3,7 @@ package com.frosqh.paikeaserver.webserver.controllers;
 import com.frosqh.paikeaserver.webserver.PaikeaApplication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.HashMap;
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.Map;
 @Controller
 public class ApiController {
 
-    @GetMapping("/apiinfos")
+    @RequestMapping("/apiinfos")
     public Map<String, List<Map<String,String>>> getApiInfos() {
         Map<String,List<Map<String, String>>> model2 = new HashMap<>();
         Map<String,String> model = new HashMap<>();
