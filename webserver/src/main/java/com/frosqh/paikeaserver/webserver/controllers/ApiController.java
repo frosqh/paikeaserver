@@ -15,8 +15,8 @@ import java.util.Map;
 public class ApiController {
 
     @RequestMapping("/apiinfos")
-    public Map<String, List<Map<String,String>>> getApiInfos() {
-        Map<String,List<Map<String, String>>> model2 = new HashMap<>();
+    public Map<String, List<Object>> getApiInfos() {
+        Map<String,List<Object>> model2 = new HashMap<>();
         Map<String,String> model = new HashMap<>();
         String inf = PaikeaApplication.player.getInfosSendable();
         Map<String, String> frame1 = new HashMap<>();
@@ -49,14 +49,18 @@ public class ApiController {
             model.put("title",infos[2].split(" - ")[1]);
             model.put("artist",infos[2].split(" - ")[0]);
         }
-        frame1.put("text", "♫"+model.get("title")+"♫");
+        frame1.put("text", model.get("title"));
         frame1.put("icon", "a43323");
 
-        frame2.put("text", "♫"+model.get("title")+"♫");
-        frame2.put("icon", "a43323");
+        Map<String, String> goalData = new HashMap<>();
+        goalData.put("start", "0");
+        goalData.put("current", String.valueOf(timeCode));
+        goalData.put("end", String.valueOf(duration));
+        goalData.put("unit", "s");
 
         model2.put("frames", new ArrayList<>());
         model2.get("frames").add(frame1);
+        model2.get("frames").add(goalData);
 
 
         return model2;
