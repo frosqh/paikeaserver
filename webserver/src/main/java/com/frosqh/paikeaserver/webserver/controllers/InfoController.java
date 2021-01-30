@@ -5,6 +5,7 @@ import com.frosqh.paikeaserver.player.exceptions.EmptyHistoryException;
 import com.frosqh.paikeaserver.player.exceptions.PauseException;
 import com.frosqh.paikeaserver.player.exceptions.PlayException;
 import com.frosqh.paikeaserver.webserver.PaikeaApplication;
+import org.springframework.security.core.parameters.P;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -86,6 +87,18 @@ public class InfoController {
         } catch (PauseException ignored) {
         }
     }
+
+    @RequestMapping("/pauseplay")
+    public void pauseplay(){
+        try {
+            if (PaikeaApplication.player.getPlaying() != null)
+                PaikeaApplication.player.pause();
+            else
+                PaikeaApplication.player.play();
+        } catch (PlayException | PauseException ignored) {
+        }
+    }
+
 
     @RequestMapping("/seekback")
     public void seekback(){
