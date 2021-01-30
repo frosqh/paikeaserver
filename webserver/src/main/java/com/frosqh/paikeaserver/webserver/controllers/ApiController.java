@@ -94,7 +94,6 @@ public class ApiController {
     @RequestMapping("/wait")
     public String waitForDoublePress() {
         Long currentNano = System.nanoTime();
-        new InfoController().pauseplay();
         if (prevNano != null && currentNano - prevNano <= 1e9){
             new InfoController().next();
         }
