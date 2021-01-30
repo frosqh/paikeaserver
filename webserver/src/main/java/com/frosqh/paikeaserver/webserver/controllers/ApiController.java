@@ -2,8 +2,10 @@ package com.frosqh.paikeaserver.webserver.controllers;
 
 import com.frosqh.paikeaserver.webserver.PaikeaApplication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -13,6 +15,8 @@ import java.util.Map;
 
 @RestController
 public class ApiController {
+
+    String message;
 
     @RequestMapping("/apiinfos")
     public Map<String, List<Object>> getApiInfos() {
@@ -62,11 +66,26 @@ public class ApiController {
         frame2.put("goalData", goalData);
         frame2.put("icon", "a43323");
 
+
+        Map<String, String> frame3 = new HashMap<>();
+        frame1.put("text", message);
+        frame1.put("icon", "a43323");
+
         model2.put("frames", new ArrayList<>());
-        model2.get("frames").add(frame1);
-        model2.get("frames").add(frame2);
+        //model2.get("frames").add(frame1);
+        //model2.get("frames").add(frame2);
+        model2.get("frames").add(frame3);
+
+
 
 
         return model2;
+    }
+
+    @RequestMapping("/changemesage")
+    public String getApiInfos(@RequestParam(value="message") String message,
+                                                 Model model) {
+        this.message = message;
+        return "redirect:apiinfos";
     }
 }
