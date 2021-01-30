@@ -20,7 +20,7 @@ public class ApiController {
         Map<String,String> model = new HashMap<>();
         String inf = PaikeaApplication.player.getInfosSendable();
         Map<String, String> frame1 = new HashMap<>();
-        Map<String, String> frame2 = new HashMap<>();
+        Map<String, Object> frame2 = new HashMap<>();
         String[] infos = inf.split("▬");
         String[] prevNext = PaikeaApplication.player.getPrevNext().split("▬");
         int timeCode = Float.valueOf(infos[3]).intValue() / 1000;
@@ -52,11 +52,15 @@ public class ApiController {
         frame1.put("text", model.get("title"));
         frame1.put("icon", "a43323");
 
+
         Map<String, String> goalData = new HashMap<>();
         goalData.put("start", "0");
         goalData.put("current", String.valueOf(timeCode));
         goalData.put("end", String.valueOf(duration));
         goalData.put("unit", "s");
+
+        frame2.put("goalData", goalData);
+        frame2.put("icon", "a43323");
 
         model2.put("frames", new ArrayList<>());
         model2.get("frames").add(frame1);
