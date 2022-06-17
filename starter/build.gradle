@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'org.openjfx.javafxplugin' version '0.0.9'
+    id 'org.openjfx.javafxplugin' version '0.0.13'
 }
 
 group 'com.frosqh.paikeaserver'
@@ -22,11 +22,14 @@ repositories {
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.13.1'
-    compile project(':settings')
-    compile project(':database')
-    compile project(':player')
-    compile project(':ts3api')
+    testImplementation('junit:junit:4.13.1')
+    implementation('com.mpatric:mp3agic:0.9.1')
+    implementation(project(':locale'))
+    implementation(project(':settings'))
+    implementation(project(':database'))
+    implementation(project(':player'))
+    implementation(project(':ts3api'))
+    implementation files('../libs/daolibrary.jar')
 
 }
 
