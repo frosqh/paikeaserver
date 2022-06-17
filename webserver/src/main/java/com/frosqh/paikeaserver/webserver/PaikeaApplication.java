@@ -7,27 +7,26 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.ui.Model;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Random;
 
 @SpringBootApplication(exclude={DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
 //@EnableOAuth2Sso
 public class PaikeaApplication {
-    public static Player player;
+    public static Player player = Starter.player;
+    public static String sep = "myownsep";
 
-    public static void start(String[] args) throws Exception {
-        ApplicationContext context = new ClassPathXmlApplicationContext(
-                "classpath:spring/application-config.xml");
+    public static void start(String[] args) {
         SpringApplication.run(PaikeaApplication.class, args);
     }
 
     public static void main(String[] args) throws Exception {
-        Starter.start(args);
-        PaikeaApplication.player = Starter.player;
+        sep = generateRandomSep();
+        Starter.start(new String[]{sep});
+        player = Starter.player;
         new Thread(() -> {
             try {
                 start(args);
@@ -79,4 +78,21 @@ public class PaikeaApplication {
         });
 
     }
+
+    private static String generateRandomSep() {
+        int leftLimit = 48; // numeral '0'
+        int rightLimit = 122; // letter 'z'
+        int targetStringLength = 10;
+        Random random = new Random();
+
+        String generatedString = random.ints(leftLimit, rightLimit + 1)
+                .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
+                .limit(targetStringLength)
+                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                .toString();
+
+        System.out.println(generatedString);
+        return generatedString;
+    }
+
 }

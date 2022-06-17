@@ -1,0 +1,94 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Liste des chansons</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <style>
+        table, tr, td, th{
+            border: 1px solid blue;
+            padding: 2px;
+        }
+
+        table th{
+            background-color: #999999;
+        }
+
+        em{
+            background-color: yellow
+        }
+
+    </style>
+</head>
+<body>
+
+<label for="search"></label>
+<input type="text" id="search" placeholder="live search"/>
+<table>
+    <tr>
+        <th th:text="Titre">Titre</th>
+        <th th:text="Artiste">Artiste</th>
+    </tr>
+
+    <tr th:each="prod: ${songs}">
+        <form method="get" action="playsong" th:name="'playsong'+${prod.id}">
+            <input type="hidden" name="id" th:value="${prod.id}"/>
+            <td th:onclick="'document.forms.playsong'+${prod.id}+'.submit()'" th:text="${prod.title}"></td>
+            <td th:text="${prod.artist}">artist</td>
+        </form>
+    </tr>
+</table>
+
+<hr/>
+<a href="/" >Retour à l'accueil</a><br/>
+</body>
+<script>
+
+    function removeHighlighting(highlightedElements){
+        highlightedElements.each(function(){
+            var element = $(this);
+            element.replaceWith(element.html());
+        })
+    }
+
+    function addHighlighting(element, textToHighlight){
+        var text = element.text().toLowerCase();
+        var highlightedText = '<em>' + textToHighlight + '</em>';
+        var newText = text.replace(textToHighlight, highlightedText);
+
+        element.html(newText);
+    }
+
+    $("#search").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+
+        removeHighlighting($("table tr em"));
+
+        $("table tr").each(function(index) {
+            if (index !== 0) {
+                $row = $(this);
+
+                var $tdElement = $row.find("td:first");
+                var id = $tdElement.text().toLowerCase();
+                var matchedIndex = id.indexOf(value);
+
+                var $tdElement2 = $row.find("td:first").next();
+                var id2 = $tdElement2.text().toLowerCase();
+                var matchedIndex2 = id2.indexOf(value);
+
+                if (matchedIndex === -1 && matchedIndex2===-1) {
+                    $row.hide();
+                }
+                else {
+                    if (matchedIndex >= 0)
+                        addHighlighting($tdElement, value);
+                    if (matchedIndex2 >= 0)
+                        addHighlighting($tdElement2,value);
+                    $row.show();
+                }
+            }
+        });
+    });
+</script>
+</html>

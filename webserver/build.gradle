@@ -2,6 +2,7 @@ buildscript {
     repositories {
         mavenCentral()
     }
+
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:2.4.1")
     }
@@ -32,7 +33,6 @@ task customFatJar(type: Jar) {
     manifest {
         attributes 'Main-Class': 'com.frosqh.paikeaserver.webserver.PaikeaApplication'
     }
-    baseName = 'bot-paikea'
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
     with jar
 }
@@ -40,17 +40,27 @@ task customFatJar(type: Jar) {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    compile group: 'org.thymeleaf', name: 'thymeleaf-spring5', version: '3.0.11.RELEASE'
-    compile group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity5', version: '3.0.4.RELEASE'
+    implementation group: 'org.thymeleaf', name: 'thymeleaf-spring5', version: '3.0.11.RELEASE'
+    implementation group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity5', version: '3.0.4.RELEASE'
+
 
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.13.1'
-    compile('org.springframework.boot:spring-boot-starter-thymeleaf')
-    compile 'org.springframework.boot:spring-boot-starter-web'
-    compile 'org.springframework.boot:spring-boot-starter-mail'
-    compile group: 'org.springframework.security.oauth', name: 'spring-security-oauth2', version: '2.5.0.RELEASE'
-    compile project(':database')
-    compile project(':starter')
+    testImplementation group: 'junit', name: 'junit', version: '4.13.1'
+    implementation('org.springframework.boot:spring-boot-starter-thymeleaf')
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+    implementation 'org.apache.commons:commons-lang3:3.12.0'
+    implementation('com.mpatric:mp3agic:0.9.1')
+    implementation('com.github.sealedtx:java-youtube-downloader:2.4.1')
+    implementation 'com.github.scribejava:scribejava-apis:8.3.1'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    implementation project(':database')
+    implementation project(':starter')
+    implementation project(':downloader')
+    implementation project(':file_explorer')
+    implementation project(':settings')
+    implementation project(':player')
+    implementation files('../libs/daolibrary.jar')
 }

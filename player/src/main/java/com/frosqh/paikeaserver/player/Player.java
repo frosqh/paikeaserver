@@ -29,7 +29,8 @@ public class Player {
     private PlayMode mode = PlayMode.NORMAL;
     private final Locale locale;
     private MethodCall methodCall;
-
+    private final String sep;
+    private boolean repeat = false;
 
 
     @FunctionalInterface
@@ -37,10 +38,11 @@ public class Player {
         void call();
     }
 
-    public Player(Locale locale){
+    public Player(Locale locale, String sep){
         history = new Stack<>();
         queue = new ArrayDeque<>();
         this.locale = locale;
+        this.sep = sep;
     }
 
     private double getVolume(){
@@ -164,13 +166,33 @@ public class Player {
         mediaPlayer.seek(mediaPlayer.getTotalDuration().multiply(seekTime));
     }
 
+    private void updateOnEndOfMedia(){
+        if (repeat){
+            mediaPlayer.setOnEndOfMedia(() -> {
+                try {
+                    seekto(0);
+                } catch (PlayException e) {
+                    e.printStackTrace();
+                }
+            });
+        } else {
+            if (autoPlay)
+                mediaPlayer.setOnEndOfMedia(this::next);
+            else
+                mediaPlayer.setOnEndOfMedia(null);
+        }
+    }
+
     //TODO Handle this !
     public void toggleAutoPlay(){
-        if (!autoPlay)
-            mediaPlayer.setOnEndOfMedia(this::next);
-        else
-            mediaPlayer.setOnEndOfMedia(null);
         autoPlay = !autoPlay;
+        updateOnEndOfMedia();
+
+    }
+
+    public void toggleRepeat() {
+        repeat = !repeat;
+        updateOnEndOfMedia();
     }
 
     public boolean isAutoPlay(){
@@ -198,11 +220,12 @@ public class Player {
             total = mD + "m";
         }
         total += sD + "s";
-        return locale.nowPlaying(songPl.getTitle(),songPl.getArtist())+"  ("+current+"/"+total+")"+"\n\t\tPlayer Volume : "+vol;
+        return locale.nowPlaying(songPl.getTitle(),songPl.getArtist())+"  ("+current+"/"+total+")"+"\n\t\tVolume : "+vol;
     }
 
     public String getInfosSendable(){
-        return "info▬"+isPlaying+"▬"+getPlaying()+"▬"+getTimeCode()+"▬"+getVolume()+"▬"+getDuration();
+
+        return "info"+sep+isPlaying+sep+getPlaying()+sep+getTimeCode()+sep+getVolume()+sep+getDuration()+sep+isAutoPlay()+sep+isRepeat();
     }
 
     public String getPrevNext() {
@@ -214,7 +237,7 @@ public class Player {
             s = secondQueue.title;
             queue.push(firstQueue);
         }
-        return (history.empty()?"":history.peek().title)+"▬"+s;
+        return (history.empty()?"":history.peek().title)+sep+s;
     }
 
     public void playPlaylist(int playListid) {
@@ -240,5 +263,9 @@ public class Player {
 
     public boolean isPlaying() {
         return isPlaying;
+    }
+
+    public boolean isRepeat() {
+        return repeat;
     }
 }

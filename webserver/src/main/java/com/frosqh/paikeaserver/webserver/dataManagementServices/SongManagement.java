@@ -10,7 +10,8 @@ public class SongManagement implements ISongManagement {
 
     @Override
     public List<Song> getAllSongs() {
-        return songDAO.getList();
+        DAO<Song> myDAO = DAO.construct(Song.class);
+        return myDAO.getList();
     }
 
     @Override

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<label for="search"></label>
+<input type="text" id="search" placeholder="live search"/>
+<table>
+    <tr>
+        <th th:text="Nom">Nom</th>
+        <th th:text="Joueur min.">min</th>
+        <th th:text="Joueur max.">max</th>
+        <th th:text="Difficulté">diff</th>
+    </tr>
+
+    <tr th:each="prod: ${games}">
+        <td th:text="${prod.name}"></td>
+        <td th:text="${prod.min_players}"></td>
+        <td th:text="${prod.max_players}"></td>
+        <td th:text="${prod.difficulty_id}"></td>
+    </tr>
+</table>
+
+<hr/>
+<a href="/" >Retour à l'accueil</a><br/>
+
+</body>
+<script>
+
+    function removeHighlighting(highlightedElements){
+        highlightedElements.each(function(){
+            var element = $(this);
+            element.replaceWith(element.html());
+        })
+    }
+
+    function addHighlighting(element, textToHighlight){
+        var text = element.text().toLowerCase();
+        var highlightedText = '<em>' + textToHighlight + '</em>';
+        var newText = text.replace(textToHighlight, highlightedText);
+
+        element.html(newText);
+    }
+
+    $("#search").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+
+        removeHighlighting($("table tr em"));
+
+        $("table tr").each(function(index) {
+            if (index !== 0) {
+                $row = $(this);
+
+                var $tdElement = $row.find("td:first");
+                var id = $tdElement.text().toLowerCase();
+                var matchedIndex = id.indexOf(value);
+
+                var $tdElement2 = $row.find("td:first").next();
+                var id2 = $tdElement2.text().toLowerCase();
+                var matchedIndex2 = id2.indexOf(value);
+
+                if (matchedIndex === -1 && matchedIndex2===-1) {
+                    $row.hide();
+                }
+                else {
+                    if (matchedIndex >= 0)
+                        addHighlighting($tdElement, value);
+                    if (matchedIndex2 >= 0)
+                        addHighlighting($tdElement2,value);
+                    $row.show();
+                }
+            }
+        });
+    });
+</script>
+
+
+</html>

@@ -40,6 +40,10 @@ body {
     /* background: linear-gradient(0.25turn,#0951c4, #95b4e5,#0951c4); */
 }
 
+.unused {
+    color: grey !important
+}
+
 .connectedUser{
     position: absolute;
     color: #ffffff;

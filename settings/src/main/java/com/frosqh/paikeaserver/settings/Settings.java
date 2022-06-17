@@ -15,7 +15,7 @@ public class Settings extends Properties {
 
     private Locale locale;
     private final static String[] keyword = {"database", "dirs", "port", "sv_address", "sv_login", "sv_password",
-            "socket_port", "dirDL", "locale"};
+            "socket_port", "dirDL", "locale", "google_clientID", "google_clientSecret", "google_callback"};
     private final static String[] intExp = {"port", "socket_port"};
 
     private static Settings instance;
@@ -40,6 +40,9 @@ public class Settings extends Properties {
         setProperty("socket_port", "8080");
         setProperty("locale", "fr_fr");
         setProperty("dirDL", "C:\\Users\\Admin\\Music\\Downloads");
+        setProperty("google_clientID", "000000000000000000000000000000000000000000000.apps.googleusercontent.com");
+        setProperty("google_clientSecret", "my_secret");
+        setProperty("google_callback", "http://localhost:8080/oauth2");
         store(output, "Bot Paikea Server Properties");
         output.close();
     }
@@ -67,6 +70,7 @@ public class Settings extends Properties {
             }
         }
         File dirDL = new File(getProperty("dirDL"));
+        //System.out.println(propertyNames().nextElement());
         System.out.println(dirDL);
         if (!dirDL.exists())
             if (!dirDL.mkdir())
