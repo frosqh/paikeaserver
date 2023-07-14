@@ -162,6 +162,11 @@ public class FRFR implements Locale {
     }
 
     @Override
+    public String descdownload() {
+        return "Télécharge ta musique (ou playlist) préférée !";
+    }
+
+    @Override
     public String nowPlaying(String song, String artist) {
         return  ":notes: En cours de lecture - "+song+" by " + artist + " :notes:";
     }

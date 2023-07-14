@@ -17,3 +17,5 @@ javadoc.options.encoding = 'UTF-8'
 dependencies {
     testImplementation('junit:junit:4.13.1')
 }
+sourceCompatibility = JavaVersion.VERSION_15
+targetCompatibility = JavaVersion.VERSION_15
