@@ -10,8 +10,19 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
-    protected void configure(HttpSecurity security) throws Exception
-    {
-        security.httpBasic().disable();
+    protected void configure(HttpSecurity security) throws Exception {
+        security.authorizeRequests()
+                .antMatchers("/oauth_login")
+                .permitAll()
+                .anyRequest()
+                .authenticated()
+                .and()
+                .oauth2Login()
+                .loginPage("/oauth_login")
+                .defaultSuccessUrl("/#")
+                .failureUrl("/login_failure");
+
+
+
     }
 }

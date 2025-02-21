@@ -22,7 +22,7 @@ repositories {
 }
 
 dependencies {
-    testImplementation('junit:junit:4.13.1')
+    testImplementation('junit:junit:4.13.2')
     implementation('com.mpatric:mp3agic:0.9.1')
     implementation(project(':locale'))
     implementation(project(':settings'))

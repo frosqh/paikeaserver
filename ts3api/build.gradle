@@ -24,12 +24,14 @@ compileTestJava.options.encoding = 'UTF-8'
 javadoc.options.encoding = 'UTF-8'
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.13.1'
-    compile group: 'com.github.theholywaffle', name: 'teamspeak3-api', version: '1.1.0'
-    compile group: 'net.sourceforge.argparse4j', name: 'argparse4j', version: '0.8.1'
-    compile project(':locale')
-    compile project(':player')
-    compile project(':settings')
-    compile project(':database')
-    compile project(':downloader')
+    testImplementation('junit:junit:4.13.2')
+    implementation('com.github.theholywaffle:teamspeak3-api:1.1.0')
+    implementation('com.github.sealedtx:java-youtube-downloader:2.4.1')
+    implementation('net.sourceforge.argparse4j:argparse4j:0.9.0')
+    implementation(project(':locale'))
+    implementation(project(':player'))
+    implementation(project(':settings'))
+    implementation(project(':database'))
+    implementation(project(':downloader'))
+    implementation files('../libs/daolibrary.jar')
 }

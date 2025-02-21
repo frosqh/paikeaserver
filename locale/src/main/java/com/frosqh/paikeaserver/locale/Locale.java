@@ -44,8 +44,10 @@ public interface Locale{
     String descgamelist();
     String descrandomgame();
     String desctoggledm();
+    String descdownload();
 
     // Commands Results
+
 
     String nowPlaying(String song, String artist);
     String nothingPlaying();

@@ -5,28 +5,29 @@ package com.frosqh.paikeaserver.locale;
 public class FRFR implements Locale {
     @Override
     public String paikeSong() {
-        return  "\n" +
-                "            Uia mai koia, whakahuatia ake;\n"+
-                "            Ko wai te whare nei e?\n" +
-                "            Ko Te Kani / Ko Rangi / Whitireia!\n" +
-                "            Ko wai te tekoteko kei runga?\n" +
-                "            Ko Paikea! Ko Paikea!\n" +
-                "            Whakakau Paikea. Hei!\n" +
-                "            Whakakau he tipua. Hei!\n" +
-                "            Whakakau he taniwha. Hei!\n" +
-                "            Ka ū Paikea ki Ahuahu. Pakia!\n" +
-                "            Kei te whitia koe\n" +
-                "            ko Kahutia-te-rangi. Aue!\n" +
-                "            Me ai tō ure ki te tamahine\n" +
-                "            a Te Whironui - aue!\n" +
-                "            nāna i noho te Roto-o-tahe.\n" +
-                "            Aue! Aue!\n" +
-                "            He koruru koe, koro e.";
+        return """
+
+                Uia mai koia, whakahuatia ake;
+                Ko wai te whare nei e?
+                Ko Te Kani / Ko Rangi / Whitireia!
+                Ko wai te tekoteko kei runga?
+                Ko Paikea! Ko Paikea!
+                Whakakau Paikea. Hei!
+                Whakakau he tipua. Hei!
+                Whakakau he taniwha. Hei!
+                Ka ū Paikea ki Ahuahu. Pakia!
+                Kei te whitia koe
+                ko Kahutia-te-rangi. Aue!
+                Me ai tō ure ki te tamahine
+                a Te Whironui - aue!
+                nāna i noho te Roto-o-tahe.
+                Aue! Aue!
+                He koruru koe, koro e.""".indent(12);
     }
 
     @Override
     public String welcomeMessage() {
-        return "Plop, je suis en ligne ! Tente !help pour avoir la liste des commandes disponibles. \n" +
+        return "Plop, je suis en ligne ! Tente !help pour avoir la liste des commandes disponibles. :whale2: \n" +
                 "Si tu veux accéder à l'interface en ligne, va sur : http://bot.paikea.wtf";
     }
 
@@ -97,12 +98,12 @@ public class FRFR implements Locale {
 
     @Override
     public String descpaikea() {
-        return "Surprise !";
+        return "Surprise ! :gift:";
     }
 
     @Override
     public String descnext() {
-        return "Lit la prochaine musique dans la liste d'attente";
+        return "Lit la prochaine musique dans la liste d'attente :hourglass_flowing_sand:";
     }
 
     @Override
@@ -122,12 +123,12 @@ public class FRFR implements Locale {
 
     @Override
     public String descsetvolume() {
-        return "Change le volume du lecteur";
+        return "Change le volume du lecteur :loud_sound:";
     }
 
     @Override
     public String desctoggleautoplay() {
-        return "(Dés)Active la lecture automatique";
+        return "(Dés)Active la lecture automatique :twisted_rightwards_arrows:";
     }
 
     @Override
@@ -157,12 +158,17 @@ public class FRFR implements Locale {
 
     @Override
     public String desctoggledm() {
-        return "(Dés)Active le mode MJ. Plus de détails sur le mode MJ peuvent être dans l'aide en ligne";
+        return "(Dés)Active le mode MJ. Plus de détails sur le mode MJ peuvent être dans l'aide en ligne :game_die: ";
+    }
+
+    @Override
+    public String descdownload() {
+        return "Télécharge ta musique (ou playlist) préférée !";
     }
 
     @Override
     public String nowPlaying(String song, String artist) {
-        return  "♫ Now playing - "+song+" by " + artist + " ♫";
+        return  ":notes: En cours de lecture - "+song+" by " + artist + " :notes:";
     }
 
     @Override
@@ -177,7 +183,7 @@ public class FRFR implements Locale {
 
     @Override
     public String toggleAutoPlayOn() {
-        return "La lecture automatique est désormais active !";
+        return "La lecture automatique est désormais active ! :twisted_rightwards_arrows: ";
     }
 
     @Override
@@ -247,12 +253,12 @@ public class FRFR implements Locale {
 
     @Override
     public String hiddenSong() {
-        return "Chanson cachée";
+        return "Chanson cachée :ninja: ";
     }
 
     @Override
     public String errorPause() {
-        return  "Rien n'est est en train d'être joué, réfléchis un peu ><";
+        return  "Rien n'est est en train d'être joué, réfléchis un peu :angry: ";
     }
 
     @Override
@@ -262,7 +268,7 @@ public class FRFR implements Locale {
 
     @Override
     public String errorPlay() {
-        return "Ça joue déjà, réfléchis un peu ><";
+        return "Ça joue déjà, réfléchis un peu :angry: ";
     }
 
     @Override
@@ -272,17 +278,17 @@ public class FRFR implements Locale {
 
     @Override
     public String notFound(String cmd) {
-        return "Commande "+cmd+" non trouvée";
+        return "Commande "+cmd+" non trouvée :interrobang: ";
     }
 
     @Override
     public String undefinedBehavior() {
-        return "Alors, crois le ou non, mais il semblerait qu'on est oublié de définir le fonctionnement de cette commande 0:)";
+        return "Alors, crois le ou non, mais il semblerait qu'on est oublié de définir le fonctionnement de cette commande :innocent: ";
     }
 
     @Override
     public String easterUndefinedBehavior() {
-        return "Ah, c'est un peu bête, je suis sûr qu'on avait pensé à un easter egg ici, mais on a du oublier :/";
+        return "Ah, c'est un peu bête, je suis sûr qu'on avait pensé à un easter egg ici, mais on a du oublier :moyai: ";
     }
 
     @Override
@@ -292,7 +298,7 @@ public class FRFR implements Locale {
 
     @Override
     public String wip() {
-        return "Cette fonction est encore en cours de développement, elle peut ne pas être fonctionnelle";
+        return "Cette fonction est encore en cours de développement, elle peut ne pas être fonctionnelle :robot_face: ";
     }
 
     @Override
@@ -302,7 +308,7 @@ public class FRFR implements Locale {
 
     @Override
     public String notAuthorized(String name) {
-        return "You are not authorized to use this command in the mode "+name;
+        return "L'usage de cette commande n'est pas autorisée dans le mode "+name;
     }
 
     @Override

@@ -13,13 +13,14 @@ public class User extends Model {
     public String scprofile;
     public String ggprofile;
 
-    protected User(int id) {
+    public User(int id) {
         super(id);
     }
 
     public User(int id, String username, String mail, String ytprofile, String spprofile, String deprofile, String scprofile, String ggprofile){
         super(id);
         this.username = username;
+        this.mail = mail;
         this.ytprofile = ytprofile;
         this.spprofile = spprofile;
         this.deprofile = deprofile;
