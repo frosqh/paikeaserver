@@ -8,4 +8,5 @@ include 'ts3api'
 include 'webserver'
 include 'starter'
 include 'downloader'
+include 'blindtest'
 

@@ -180,6 +180,11 @@ public class ENUS implements Locale {
     }
 
     @Override
+    public String descdownload() {
+        return null;
+    }
+
+    @Override
     public String nowPlaying(String song, String artist) {
         return null;
     }
