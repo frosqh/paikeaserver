@@ -54,7 +54,7 @@ dependencies {
     implementation 'org.apache.commons:commons-lang3:3.12.0'
     implementation('com.mpatric:mp3agic:0.9.1')
     implementation('com.github.sealedtx:java-youtube-downloader:2.4.1')
-    implementation 'com.github.scribejava:scribejava-apis:8.3.1'
+    implementation 'com.github.scribejava:scribejava-apis:8.3.3'
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
     implementation project(':database')
     implementation project(':starter')
