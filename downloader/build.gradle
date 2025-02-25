@@ -20,7 +20,7 @@ dependencies {
     implementation('com.writingminds:FFmpegAndroid:0.3.2')
     implementation('com.github.sealedtx:java-youtube-downloader:2.4.1')
     implementation('org.slf4j:slf4j-log4j12:2.0.0')
-    implementation('net.bramp.ffmpeg:ffmpeg:0.7.0')
+    implementation('net.bramp.ffmpeg:ffmpeg:0.8.0')
     implementation('com.mpatric:mp3agic:0.9.1')
     implementation(project(':settings'))
     implementation(project(':database'))
